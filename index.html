@@ -464,6 +464,27 @@
             background-color: var(--binter-green-dark);
         }
 
+        /* Estilo específico para el botón continuar/confirmar con fondo transparente oscuro */
+        .btn-transparent-dark {
+            background-color: rgba(30, 30, 30, 0.75);
+            backdrop-filter: blur(5px);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            width: 100%;
+            padding: 15px;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .btn-transparent-dark:hover {
+            background-color: rgba(20, 20, 20, 0.9);
+            transform: translateY(-1px);
+        }
+
         .routes-list {
             display: flex;
             flex-direction: column;
@@ -588,7 +609,7 @@
             overflow-y: auto;
         }
 
-        /* ESTILOS PARA LA GALERÍA DE FOTOS */
+        /* GALERÍA DE FOTOS */
         .photos-container {
             position: relative;
             min-height: 400px;
@@ -693,7 +714,7 @@
             fill: white;
         }
 
-        /* CARTEL DE AVISOS PERSONALIZADO (FONDO VERDE, TEXTO BLANCO Y NEGRITA) */
+        /* CARTEL DE AVISOS */
         #custom-toast-container {
             position: fixed;
             top: 20px;
@@ -887,6 +908,18 @@
         </div>
     </div>
 
+    <div id="deletePinModal" class="modal">
+        <div class="modal-content" style="max-width: 400px; text-align: center;">
+            <h3 style="margin-bottom: 15px; color: var(--binter-green-dark);">ELIMINAR FOTO</h3>
+            <p id="deletePinModalText" style="font-size: 13px; color: #666; margin-bottom: 20px; font-weight: 600;"></p>
+            <input type="password" id="inputDeletePin" placeholder="INTRODUCE EL PIN" style="width: 100%; text-align: center; margin-bottom: 10px; font-size: 16px; letter-spacing: 2px;">
+            <div style="display: flex; gap: 10px; margin-top: 15px;">
+                <button type="button" class="btn-transparent-dark" onclick="confirmDeletePhoto()" style="margin-top:0;">CONTINUAR</button>
+                <button type="button" class="btn-submit" style="margin-top:0; background: #78909c;" onclick="closeDeletePinModal()">CANCELAR</button>
+            </div>
+        </div>
+    </div>
+
     <div id="editModal" class="modal">
         <div class="modal-content">
             <h3 style="margin-bottom: 20px; color: var(--binter-green-dark);">EDITAR RUTA</h3>
@@ -980,7 +1013,7 @@
                     </div>
 
                     <div class="form-group full-width">
-                        <label>SELECCIONAR O PEGAR FOTOS</label>
+                        <label>SELECCIONAR FOTOS</label>
                         <div id="photoUploadGrid" class="photo-upload-grid">
                             <div class="btn-add-more-box" id="addMoreBox">
                                 <span class="plus-icon">+</span>
@@ -1003,9 +1036,15 @@
         const ADMIN_CODE = "1989";
         let isAdminLoggedIn = false;
         let activeFilter = null;
+        let photoToDeleteId = null;
 
         let routesData = JSON.parse(localStorage.getItem('binter_routes')) || [];
         let photosData = JSON.parse(localStorage.getItem('binter_photos')) || [];
+
+        // Forzar que al cargar la página se abra directamente la pestaña inicio
+        window.addEventListener('DOMContentLoaded', () => {
+            switchTab('home');
+        });
 
         function mostrarAviso(mensaje) {
             const container = document.getElementById('custom-toast-container');
@@ -1151,58 +1190,37 @@
             mostrarAviso("¡Ruta añadida con éxito!");
         });
 
-        /* GESTIÓN DE FOTOS MÚLTIPLES CON BOTÓN MÁS, PEGAR Y MÁXIMO 5 */
+        /* GESTIÓN DE FOTOS MÚLTIPLES CON BOTÓN MÁS Y MÁXIMO 5 */
         let selectedPhotosArray = [];
 
         document.getElementById('photoFiles').addEventListener('change', function(e) {
             const files = e.target.files;
             if (!files || files.length === 0) return;
-            processFiles(files);
-            this.value = "";
-        });
 
-        document.getElementById('photoModal').addEventListener('paste', function(e) {
-            const items = e.clipboardData || e.originalEvent.clipboardData;
-            if (!items || !items.items) return;
-
-            let imageFiles = [];
-            for (let i = 0; i < items.items.length; i++) {
-                if (items.items[i].type.indexOf('image') !== -1) {
-                    const blob = items.items[i].getAsFile();
-                    if (blob) {
-                        imageFiles.push(blob);
-                    }
-                }
-            }
-
-            if (imageFiles.length > 0) {
-                e.preventDefault();
-                processFiles(imageFiles);
-            }
-        });
-
-        function processFiles(filesList) {
             const remainingSlots = 5 - selectedPhotosArray.length;
             if (remainingSlots <= 0) {
                 mostrarAviso("Ya has alcanzado el límite máximo de 5 fotos.");
+                this.value = "";
                 return;
             }
 
-            const filesToProcess = Array.from(filesList).slice(0, remainingSlots);
+            const filesToProcess = Array.from(files).slice(0, remainingSlots);
 
-            filesToProcess.forEach((file, index) => {
+            filesToProcess.forEach(file => {
                 const reader = new FileReader();
                 reader.onload = function(event) {
                     selectedPhotosArray.push({
-                        id: Date.now() + Math.random() + index,
-                        name: file.name || `imagen_pegada_${Date.now()}.png`,
+                        id: Date.now() + Math.random(),
+                        name: file.name,
                         content: event.target.result
                     });
                     updatePhotoPreviewUI();
                 };
                 reader.readAsDataURL(file);
             });
-        }
+
+            this.value = "";
+        });
 
         function removeSelectedPhoto(id) {
             selectedPhotosArray = selectedPhotosArray.filter(p => p.id !== id);
@@ -1250,7 +1268,7 @@
         document.getElementById('photoForm').addEventListener('submit', function(e) {
             e.preventDefault();
             if (selectedPhotosArray.length === 0) {
-                mostrarAviso("Por favor, selecciona o pega al menos una foto.");
+                mostrarAviso("Por favor, selecciona al menos una foto.");
                 return;
             }
 
@@ -1294,17 +1312,36 @@
             `).join('');
         }
 
+        /* MODAL DE PIN PERSONALIZADO */
         function tryDeletePhoto(id) {
             const photo = photosData.find(p => p.id === id);
             if (!photo) return;
 
-            const inputPin = prompt(`Introduce el PIN secreto establecido para borrar la foto de @${photo.user}:`);
-            if (inputPin === null) return;
+            photoToDeleteId = id;
+            document.getElementById('deletePinModalText').textContent = `INTRODUCE EL PIN SECRETO ESTABLECIDO PARA BORRAR LA FOTO DE @${photo.user}:`;
+            document.getElementById('inputDeletePin').value = '';
+            document.getElementById('deletePinModal').classList.add('active');
+        }
+
+        function closeDeletePinModal() {
+            document.getElementById('deletePinModal').classList.remove('active');
+            photoToDeleteId = null;
+        }
+
+        function confirmDeletePhoto() {
+            const inputPin = document.getElementById('inputDeletePin').value;
+            const photo = photosData.find(p => p.id === photoToDeleteId);
+
+            if (!photo) {
+                closeDeletePinModal();
+                return;
+            }
 
             if (inputPin === photo.pin) {
-                photosData = photosData.filter(p => p.id !== id);
+                photosData = photosData.filter(p => p.id !== photoToDeleteId);
                 localStorage.setItem('binter_photos', JSON.stringify(photosData));
                 renderPhotos();
+                closeDeletePinModal();
                 mostrarAviso("Foto eliminada correctamente.");
             } else {
                 mostrarAviso("PIN incorrecto. No puedes borrar esta foto.");
