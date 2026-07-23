@@ -9,10 +9,10 @@
         :root {
             --binter-green: #40af35;
             --binter-green-dark: #2d8225;
-            --bg-color: #f2f5f3;
+            --bg-body: #f3f6f3;
             --card-bg: #ffffff;
             --text-color: #2c3e50;
-            --border-color: #dcdfe3;
+            --border-color: #cfd8dc;
             --danger-color: #e53935;
             --warning-color: #f57c00;
         }
@@ -25,26 +25,22 @@
         }
 
         body {
-            background-color: var(--bg-color);
+            background-color: var(--bg-body);
             color: var(--text-color);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
         }
 
-        /* BARRA SUPERIOR */
+        /* CABECERA Y NAVEGACIÓN */
         header {
             background-color: var(--binter-green);
-            color: white;
-            padding: 15px 30px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+            padding: 15px 25px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
-        .header-content {
-            max-width: 1000px;
+        .nav-container {
+            max-width: 950px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
@@ -92,7 +88,6 @@
             font-weight: 700;
             cursor: pointer;
             font-size: 13px;
-            transition: all 0.2s ease;
         }
 
         .nav-btn:hover, .nav-btn.active {
@@ -100,30 +95,32 @@
             color: var(--binter-green-dark);
         }
 
-        /* CONTENEDOR PRINCIPAL */
+        /* CONTENEDOR DE CONTENIDO */
         main {
             flex: 1;
-            max-width: 950px;
             width: 100%;
+            max-width: 950px;
             margin: 30px auto;
             padding: 0 20px;
         }
 
+        /* VISTAS */
         .view {
             display: none;
         }
 
+        /* Aseguramos que la vista activa sea visible siempre */
         .view.active {
-            display: block;
+            display: block !important;
         }
 
         /* PORTADA */
         .home-card {
             background: #ffffff;
             border-radius: 16px;
-            padding: 50px 30px;
+            padding: 40px 20px;
             text-align: center;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.06);
             border-top: 6px solid var(--binter-green);
         }
 
@@ -131,20 +128,20 @@
             font-family: 'Montserrat', sans-serif;
             font-style: italic;
             font-weight: 900;
-            font-size: 60px;
+            font-size: 65px;
             color: var(--binter-green-dark);
             line-height: 1;
         }
 
-        .hero-subtitle {
-            color: #546e7a;
-            font-size: 18px;
-            margin-bottom: 30px;
+        .hero-sub {
             font-style: italic;
+            font-size: 18px;
+            color: #607d8b;
+            margin-bottom: 30px;
         }
 
         .modo-canario-badge {
-            background-color: #f0f8f1;
+            background-color: #eef7ee;
             border: 2px solid var(--binter-green);
             color: var(--binter-green-dark);
             display: inline-flex;
@@ -174,19 +171,18 @@
             border: none;
             cursor: pointer;
             box-shadow: 0 4px 12px rgba(64, 175, 53, 0.3);
-            transition: background 0.2s;
         }
 
         .btn-hero:hover {
             background-color: var(--binter-green-dark);
         }
 
-        /* FORMULARIOS Y TARJETAS */
+        /* TARJETAS Y FORMULARIOS */
         .card {
             background-color: var(--card-bg);
             border-radius: 16px;
-            padding: 35px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.06);
         }
 
         .card-title {
@@ -237,7 +233,7 @@
 
         .file-upload-zone {
             border: 2px dashed var(--binter-green);
-            background-color: #f8fbf8;
+            background-color: #f7faf7;
             border-radius: 10px;
             padding: 25px;
             text-align: center;
@@ -262,47 +258,4 @@
         .btn-submit {
             background-color: var(--binter-green);
             color: white;
-            border: none;
-            width: 100%;
-            padding: 14px;
-            font-size: 16px;
-            font-weight: 700;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-top: 25px;
-        }
-
-        .btn-submit:hover {
-            background-color: var(--binter-green-dark);
-        }
-
-        /* RUTAS */
-        .routes-list {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .route-card {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
-            gap: 15px;
-            align-items: center;
-            border-left: 6px solid var(--binter-green);
-        }
-
-        .route-item-title {
-            font-size: 11px;
-            color: #78909c;
-            text-transform: uppercase;
-            font-weight: 700;
-        }
-
-        .route-item-value {
-            font-size: 15px;
-            font-weight
+            border
