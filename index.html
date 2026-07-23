@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binter - Gestión de Rutas y Planes de Vuelo</title>
+    <style>
+        :root {
+            --binter-green: #00873d;
+            --binter-green-dark: #00662e;
+            --binter-light-green: #e6f4ec;
+            --bg-color: #f4f6f8;
+            --card-bg: #ffffff;
+            --text-color: #2c3e50;
+            --border-color: #dcdfe6;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Header / Logo Binter */
+        header {
+            width: 100%;
+            max-width: 800px;
+            background-color: var(--binter-green);
+            padding: 20px;
+            border-radius: 12px 12px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* Icono / Logo Binter aproximado */
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            color: var(--binter-green);
+            font-size: 20px;
+        }
+
+        .logo-text {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .header-title {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.9;
+        }
+
+        /* Contenedor Principal */
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: 0 0 12px 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 8px;
+            color: #4a5568;
+        }
+
+        input[type="text"],
+        input[type="time"] {
+            padding: 12px;
+            border: 1.5px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 15px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            outline: none;
+        }
+
+        input[type="text"]:focus,
+        input[type="time"]:focus {
+            border-color: var(--binter-green);
+            box-shadow: 0 0 0 3px rgba(0, 135, 61, 0.15);
+        }
+
+        /* Zona de Carga de Archivo */
+        .file-upload-zone {
+            border: 2px dashed var(--binter-green);
+            background-color: var(--binter-light-green);
+            border-radius: 8px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            position: relative;
+        }
+
+        .file-upload-zone:hover {
+            background-color: #d8ede0;
+        }
+
+        .file-upload-zone input[type="file"] {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .upload-icon {
+            font-size: 32px;
+            color: var(--binter-green);
+            margin-bottom: 8px;
+        }
+
+        .file-name-display {
+            margin-top: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--binter-green-dark);
+        }
+
+        /* Botón de Enviar */
+        .btn-submit {
+            width: 100%;
+            background-color: var(--binter-green);
+            color: white;
+            border: none;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 10px;
+        }
+
+        .btn-submit:hover {
+            background-color: var(--binter-green-dark);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-container">
+            <div class="logo-icon">✈</div>
+            <div class="logo-text">Binter</div>
+        </div>
+        <div class="header-title">Hoja de Ruta de Vuelo</div>
+    </header>
+
+    <div class="container">
+        <form id="binter-route-form">
+            <div class="form-grid">
+                
+                <div class="form-group">
+                    <label for="vuelo">Nº Vuelo</label>
+                    <input type="text" id="vuelo" name="vuelo" placeholder="Ej: NT 221" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="icao">ICAO (Origen - Destino)</label>
+                    <input type="text" id="icao" name="icao" placeholder="Ej: GCXO - GCLP" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="tiempo">Tiempo Estimado</label>
+                    <input type="text" id="tiempo" name="tiempo" placeholder="Ej: 00h 35m" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="estacionamiento">Estacionamiento / Stand</label>
+                    <input type="text" id="estacionamiento" name="estacionamiento" placeholder="Ej: Stand 12" required>
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="ruta">Ruta de Vuelo</label>
+                    <input type="text" id="ruta" name="ruta" placeholder="Ej: LERAM W110 SIMUR" required>
+                </div>
+
+                <div class="form-group full-width">
+                    <label>Plan de Vuelo (Adjuntar archivo)</label>
+                    <div class="file-upload-zone" id="upload-zone">
+                        <div class="upload-icon">📄</div>
+                        <p><strong>Haz clic aquí</strong> o arrastra tu archivo del Plan de Vuelo (.pdf, .txt, .fpl)</p>
+                        <input type="file" id="plan-vuelo" name="plan_vuelo" accept=".pdf,.txt,.fpl,.pdf" required>
+                        <div class="file-name-display" id="file-name">Ningún archivo seleccionado</div>
+                    </div>
+                </div>
+
+            </div>
+
+            <button type="submit" class="btn-submit">Guardar Ruta</button>
+        </form>
+    </div>
+
+    <script>
+        // Mostrar el nombre del archivo seleccionado en pantalla
+        const fileInput = document.getElementById('plan-vuelo');
+        const fileNameDisplay = document.getElementById('file-name');
+
+        fileInput.addEventListener('change', function() {
+            if (this.files && this.files.length > 0) {
+                fileNameDisplay.textContent = "Archivo seleccionado: " + this.files[0].name;
+            } else {
+                fileNameDisplay.textContent = "Ningún archivo seleccionado";
+            }
+        });
+
+        // Manejo del formulario
+        document.getElementById('binter-route-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('¡Ruta guardada y Plan de Vuelo adjuntado correctamente!');
+        });
+    </script>
+
+</body>
+</html>
