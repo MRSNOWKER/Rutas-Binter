@@ -9,7 +9,6 @@
         :root {
             --binter-green: #40af35;
             --binter-green-dark: #2d8225;
-            --binter-bg-green: #41af35;
             --card-bg: #ffffff;
             --text-color: #2c3e50;
             --border-color: #cfd8dc;
@@ -25,7 +24,7 @@
         }
 
         body {
-            background-color: var(--binter-bg-green);
+            background-color: var(--binter-green);
             color: var(--text-color);
             min-height: 100vh;
             display: flex;
@@ -34,7 +33,7 @@
 
         /* BARRA DE NAVEGACIÓN */
         nav {
-            background-color: rgba(0, 0, 0, 0.15);
+            background-color: rgba(0, 0, 0, 0.25);
             backdrop-filter: blur(8px);
             padding: 12px 25px;
             display: flex;
@@ -52,12 +51,11 @@
             align-items: center;
         }
 
-        /* LOGO EN LA BARRA SUPERIOR */
         .img-logo-nav {
             height: 38px;
             width: auto;
             object-fit: contain;
-            filter: drop-shadow(1px 2px 4px rgba(0, 0, 0, 0.2));
+            filter: drop-shadow(1px 2px 4px rgba(0, 0, 0, 0.3));
         }
 
         .nav-links {
@@ -102,42 +100,48 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* PORTADA PRINCIPAL */
+        /* PORTADA PRINCIPAL CON FONDO DE AERONAVES */
         #view-home {
+            position: relative;
+            max-width: 100% !important;
+            min-height: calc(100vh - 65px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             text-align: center;
             color: white;
-            padding-top: 40px;
+            padding: 40px 20px;
+            background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.55)), url('image_20e708.jpg') no-repeat center center/cover;
         }
 
         .hero-logo-wrapper {
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
-        /* LOGO PRINCIPAL PORTADA */
         .img-logo-hero {
-            height: 90px;
+            height: 95px;
             max-width: 90%;
             width: auto;
             object-fit: contain;
-            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.15));
+            filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4));
         }
 
-        /* BADGE MODO CANARIO CON LA PALMERA ORIGINAL */
+        /* BADGE MODO CANARIO CON LA PALMERA */
         .modo-canario-badge {
             background: #ffffff;
             color: var(--binter-green-dark);
             display: inline-flex;
             align-items: center;
             gap: 14px;
-            padding: 12px 28px;
+            padding: 12px 30px;
             border-radius: 50px;
             font-size: 26px;
             font-weight: 800;
-            margin-bottom: 40px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            margin-bottom: 35px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
         }
 
-        /* CONTENEDOR DE LA PALMERA */
         .palmera-icon-wrapper {
             width: 42px;
             height: 42px;
@@ -171,13 +175,13 @@
             font-weight: 700;
             border: none;
             cursor: pointer;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
             transition: transform 0.2s, box-shadow 0.2s;
         }
 
         .btn-hero:hover {
             transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
         }
 
         /* FORMULARIOS Y TARJETAS */
@@ -222,16 +226,17 @@
             color: #455a64;
         }
 
-        input[type="text"], input[type="password"] {
+        input[type="text"], input[type="password"], select {
             padding: 12px 15px;
             border: 1.5px solid var(--border-color);
             border-radius: 8px;
             font-size: 15px;
             outline: none;
+            background-color: #fff;
             transition: border-color 0.2s;
         }
 
-        input[type="text"]:focus, input[type="password"]:focus {
+        input[type="text"]:focus, input[type="password"]:focus, select:focus {
             border-color: var(--binter-green);
         }
 
@@ -425,7 +430,7 @@
 
     <div id="view-home" class="view active">
         <div class="hero-logo-wrapper">
-            <img src="logo-binter.png" alt="Binter Canarias" class="img-logo-hero" onerror="this.onerror=null; this.outerHTML='<h1 style=\'font-family:Montserrat; font-style:italic; font-size:65px; color:#fff; text-shadow:2px 4px 8px rgba(0,0,0,0.2);\'>Binter</h1><p style=\'font-style:italic; font-size:18px;\'>Líneas aéreas de Canarias</p>';">
+            <img src="logo-binter.png" alt="Binter Canarias" class="img-logo-hero" onerror="this.onerror=null; this.outerHTML='<h1 style=\'font-family:Montserrat; font-style:italic; font-size:65px; color:#fff; text-shadow:2px 4px 8px rgba(0,0,0,0.3);\'>Binter</h1><p style=\'font-style:italic; font-size:18px;\'>Líneas aéreas de Canarias</p>';">
         </div>
         
         <div>
@@ -451,6 +456,15 @@
                     <div class="form-group">
                         <label for="vuelo">Nº Vuelo</label>
                         <input type="text" id="vuelo" placeholder="Ej: NT 221" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="aeronave">Aeronave</label>
+                        <select id="aeronave" required>
+                            <option value="" disabled selected>Selecciona aeronave</option>
+                            <option value="ATR 72-600">ATR 72-600</option>
+                            <option value="Embraer E195-E2">Embraer E195-E2</option>
+                        </select>
                     </div>
 
                     <div class="form-group">
@@ -524,6 +538,13 @@
                     <div class="form-group">
                         <label>Nº Vuelo</label>
                         <input type="text" id="edit-vuelo" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Aeronave</label>
+                        <select id="edit-aeronave" required>
+                            <option value="ATR 72-600">ATR 72-600</option>
+                            <option value="Embraer E195-E2">Embraer E195-E2</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label>ICAO</label>
@@ -651,6 +672,7 @@
             const newRoute = {
                 id: Date.now(),
                 vuelo: document.getElementById('vuelo').value,
+                aeronave: document.getElementById('aeronave').value,
                 icao: document.getElementById('icao').value,
                 tiempo: document.getElementById('tiempo').value,
                 estacionamiento: document.getElementById('estacionamiento').value,
@@ -677,6 +699,7 @@
             container.innerHTML = routesData.map(route => `
                 <div class="route-card">
                     <div><div class="route-item-title">Nº Vuelo</div><div class="route-item-value">${route.vuelo}</div></div>
+                    <div><div class="route-item-title">Aeronave</div><div class="route-item-value">${route.aeronave || 'ATR 72-600'}</div></div>
                     <div><div class="route-item-title">ICAO</div><div class="route-item-value">${route.icao}</div></div>
                     <div><div class="route-item-title">Tiempo</div><div class="route-item-value">${route.tiempo}</div></div>
                     <div><div class="route-item-title">Estacionamiento</div><div class="route-item-value">${route.estacionamiento}</div></div>
@@ -699,6 +722,7 @@
             container.innerHTML = routesData.map(route => `
                 <div class="route-card" style="border-left-color: var(--warning-color);">
                     <div><div class="route-item-title">Nº Vuelo</div><div class="route-item-value">${route.vuelo}</div></div>
+                    <div><div class="route-item-title">Aeronave</div><div class="route-item-value">${route.aeronave || 'ATR 72-600'}</div></div>
                     <div><div class="route-item-title">ICAO</div><div class="route-item-value">${route.icao}</div></div>
                     <div><div class="route-item-title">Tiempo</div><div class="route-item-value">${route.tiempo}</div></div>
                     <div><div class="route-item-title">Estacionamiento</div><div class="route-item-value">${route.estacionamiento}</div></div>
@@ -725,6 +749,7 @@
 
             document.getElementById('edit-id').value = route.id;
             document.getElementById('edit-vuelo').value = route.vuelo;
+            document.getElementById('edit-aeronave').value = route.aeronave || "ATR 72-600";
             document.getElementById('edit-icao').value = route.icao;
             document.getElementById('edit-tiempo').value = route.tiempo;
             document.getElementById('edit-estacionamiento').value = route.estacionamiento;
@@ -750,7 +775,8 @@
                     return {
                         ...route,
                         vuelo: document.getElementById('edit-vuelo').value,
-                        icao: document.getElementById('edit-icao').value,
+                        aeronave: document.getElementById('edit-aeronave').value,
+                        icao: document.getElementById('edit-icao'].value,
                         tiempo: document.getElementById('edit-tiempo').value,
                         estacionamiento: document.getElementById('edit-estacionamiento').value,
                         ruta: document.getElementById('edit-ruta').value,
