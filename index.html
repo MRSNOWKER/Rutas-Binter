@@ -103,9 +103,10 @@
         /* PORTADA PRINCIPAL CON FONDO DE AERONAVES */
         #view-home {
             position: relative;
+            width: 100% !important;
             max-width: 100% !important;
-            min-height: calc(100vh - 65px);
-            display: flex;
+            flex: 1;
+            display: none;
             flex-direction: column;
             align-items: center;
             justify-content: center;
@@ -113,6 +114,10 @@
             color: white;
             padding: 40px 20px;
             background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.55)), url('image_20e708.jpg') no-repeat center center/cover;
+        }
+
+        #view-home.active {
+            display: flex;
         }
 
         .hero-logo-wrapper {
@@ -127,14 +132,14 @@
             filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4));
         }
 
-        /* BADGE MODO CANARIO CON LA PALMERA */
+        /* BADGE MODO CANARIO CON LA PALMERA MÁS GRANDE */
         .modo-canario-badge {
             background: #ffffff;
             color: var(--binter-green-dark);
             display: inline-flex;
             align-items: center;
-            gap: 14px;
-            padding: 12px 30px;
+            gap: 18px;
+            padding: 14px 34px;
             border-radius: 50px;
             font-size: 26px;
             font-weight: 800;
@@ -143,19 +148,20 @@
         }
 
         .palmera-icon-wrapper {
-            width: 42px;
-            height: 42px;
-            background-color: #ffffff;
+            width: 60px;
+            height: 60px;
+            background-color: #f1f8f3;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
+            border: 2px solid var(--binter-green);
         }
 
         .img-palmera {
-            width: 32px;
-            height: 32px;
+            width: 46px;
+            height: 46px;
             object-fit: contain;
         }
 
@@ -776,7 +782,7 @@
                         ...route,
                         vuelo: document.getElementById('edit-vuelo').value,
                         aeronave: document.getElementById('edit-aeronave').value,
-                        icao: document.getElementById('edit-icao'].value,
+                        icao: document.getElementById('edit-icao').value,
                         tiempo: document.getElementById('edit-tiempo').value,
                         estacionamiento: document.getElementById('edit-estacionamiento').value,
                         ruta: document.getElementById('edit-ruta').value,
