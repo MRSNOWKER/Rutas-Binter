@@ -148,6 +148,16 @@
             display: flex;
         }
 
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
         .hero-logo {
             font-family: 'Montserrat', sans-serif;
             font-style: italic;
@@ -480,19 +490,21 @@
 
     <div class="main-container">
         <div id="view-home" class="view active">
-            <div class="hero-logo">Binter</div>
-            <div class="hero-sub">Líneas aéreas de Canarias</div>
-            
-            <div>
-                <div class="modo-canario-badge">
-                    <span class="toggle-icon"></span>
-                    <span>Vuela en #ModoCanario</span>
+            <div class="hero-content">
+                <div class="hero-logo">Binter</div>
+                <div class="hero-sub">Líneas aéreas de Canarias</div>
+                
+                <div>
+                    <div class="modo-canario-badge">
+                        <span class="toggle-icon"></span>
+                        <span>Vuela en #ModoCanario</span>
+                    </div>
                 </div>
-            </div>
 
-            <div class="hero-buttons">
-                <button class="btn-hero" onclick="switchTab('upload')">Subir tu ruta</button>
-                <button class="btn-hero" onclick="switchTab('routes')">Ver todas las rutas</button>
+                <div class="hero-buttons">
+                    <button class="btn-hero" onclick="switchTab('upload')">Subir tu ruta</button>
+                    <button class="btn-hero" onclick="switchTab('routes')">Ver todas las rutas</button>
+                </div>
             </div>
         </div>
 
@@ -615,14 +627,10 @@
     </div>
 
     <script>
-        // CÓDIGO DE ACCESO ADMINISTRADOR
         const ADMIN_CODE = "1989";
         let isAdminLoggedIn = false;
-
-        // Almacenamiento local de rutas
         let routesData = JSON.parse(localStorage.getItem('binter_routes')) || [];
 
-        // Cambiar pestañas
         function switchTab(tabName) {
             document.querySelectorAll('.view').forEach(view => view.classList.remove('active'));
             document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
@@ -636,7 +644,6 @@
             if (tabName === 'admin' && isAdminLoggedIn) renderAdminRoutes();
         }
 
-        // VALIDACIÓN CÓDIGO ADMIN
         function checkAdminCode() {
             const input = document.getElementById('adminCodeInput').value;
             if (input === ADMIN_CODE) {
@@ -656,7 +663,6 @@
             document.getElementById('admin-panel').style.display = 'none';
         }
 
-        // Subida de archivos pestaña Nueva Ruta (Base64)
         const fileInput = document.getElementById('planVuelo');
         const fileNameDisplay = document.getElementById('fileNameDisplay');
         let selectedFileData = null;
@@ -679,7 +685,6 @@
             }
         });
 
-        // Subida de archivos Modal Edición
         const editFileInput = document.getElementById('edit-planVuelo');
         const editFileNameDisplay = document.getElementById('editFileNameDisplay');
         let editSelectedFileData = null;
@@ -702,7 +707,6 @@
             }
         });
 
-        // Guardar Nueva Ruta
         document.getElementById('routeForm').addEventListener('submit', function(e) {
             e.preventDefault();
             if (!selectedFileData) {
@@ -729,7 +733,6 @@
             switchTab('routes');
         });
 
-        // Renderizar Rutas (Vista Normal)
         function renderRoutes() {
             const container = document.getElementById('routesContainer');
             if (routesData.length === 0) {
@@ -752,7 +755,6 @@
             `).join('');
         }
 
-        // Renderizar Rutas (Panel Administrador)
         function renderAdminRoutes() {
             const container = document.getElementById('adminRoutesContainer');
             if (routesData.length === 0) {
@@ -775,7 +777,6 @@
             `).join('');
         }
 
-        // ELIMINAR RUTA
         function deleteRoute(id) {
             if (confirm('¿Estás seguro de que deseas eliminar esta ruta?')) {
                 routesData = routesData.filter(route => route.id !== id);
@@ -784,7 +785,6 @@
             }
         }
 
-        // EDITAR RUTA (MODAL)
         function openEditModal(id) {
             const route = routesData.find(r => r.id === id);
             if (!route) return;
@@ -796,7 +796,6 @@
             document.getElementById('edit-estacionamiento').value = route.estacionamiento;
             document.getElementById('edit-ruta').value = route.ruta;
 
-            // Reiniciar selector de archivo de edición
             editSelectedFileData = null;
             document.getElementById('edit-planVuelo').value = "";
             editFileNameDisplay.textContent = `Actual: ${route.file.name}`;
@@ -808,7 +807,6 @@
             document.getElementById('editModal').classList.remove('active');
         }
 
-        // GUARDAR CAMBIOS DE EDICIÓN
         document.getElementById('editForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const id = Number(document.getElementById('edit-id').value);
@@ -822,7 +820,6 @@
                         tiempo: document.getElementById('edit-tiempo').value,
                         estacionamiento: document.getElementById('edit-estacionamiento').value,
                         ruta: document.getElementById('edit-ruta').value,
-                        // Reemplaza el archivo solo si se ha subido uno nuevo
                         file: editSelectedFileData ? editSelectedFileData : route.file
                     };
                 }
