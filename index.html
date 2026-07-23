@@ -980,7 +980,7 @@
                     </div>
 
                     <div class="form-group full-width">
-                        <label>SELECCIONAR FOTOS</label>
+                        <label>SELECCIONAR O PEGAR FOTOS</label>
                         <div id="photoUploadGrid" class="photo-upload-grid">
                             <div class="btn-add-more-box" id="addMoreBox">
                                 <span class="plus-icon">+</span>
@@ -1007,7 +1007,6 @@
         let routesData = JSON.parse(localStorage.getItem('binter_routes')) || [];
         let photosData = JSON.parse(localStorage.getItem('binter_photos')) || [];
 
-        // Sistema de avisos personalizados (Fondo verde, texto blanco, negrita)
         function mostrarAviso(mensaje) {
             const container = document.getElementById('custom-toast-container');
             const toast = document.createElement('div');
@@ -1152,37 +1151,58 @@
             mostrarAviso("¡Ruta añadida con éxito!");
         });
 
-        /* GESTIÓN DE FOTOS MÚLTIPLES CON BOTÓN MÁS Y MÁXIMO 5 */
+        /* GESTIÓN DE FOTOS MÚLTIPLES CON BOTÓN MÁS, PEGAR Y MÁXIMO 5 */
         let selectedPhotosArray = [];
 
         document.getElementById('photoFiles').addEventListener('change', function(e) {
             const files = e.target.files;
             if (!files || files.length === 0) return;
+            processFiles(files);
+            this.value = "";
+        });
 
+        document.getElementById('photoModal').addEventListener('paste', function(e) {
+            const items = e.clipboardData || e.originalEvent.clipboardData;
+            if (!items || !items.items) return;
+
+            let imageFiles = [];
+            for (let i = 0; i < items.items.length; i++) {
+                if (items.items[i].type.indexOf('image') !== -1) {
+                    const blob = items.items[i].getAsFile();
+                    if (blob) {
+                        imageFiles.push(blob);
+                    }
+                }
+            }
+
+            if (imageFiles.length > 0) {
+                e.preventDefault();
+                processFiles(imageFiles);
+            }
+        });
+
+        function processFiles(filesList) {
             const remainingSlots = 5 - selectedPhotosArray.length;
             if (remainingSlots <= 0) {
                 mostrarAviso("Ya has alcanzado el límite máximo de 5 fotos.");
-                this.value = "";
                 return;
             }
 
-            const filesToProcess = Array.from(files).slice(0, remainingSlots);
+            const filesToProcess = Array.from(filesList).slice(0, remainingSlots);
 
-            filesToProcess.forEach(file => {
+            filesToProcess.forEach((file, index) => {
                 const reader = new FileReader();
                 reader.onload = function(event) {
                     selectedPhotosArray.push({
-                        id: Date.now() + Math.random(),
-                        name: file.name,
+                        id: Date.now() + Math.random() + index,
+                        name: file.name || `imagen_pegada_${Date.now()}.png`,
                         content: event.target.result
                     });
                     updatePhotoPreviewUI();
                 };
                 reader.readAsDataURL(file);
             });
-
-            this.value = "";
-        });
+        }
 
         function removeSelectedPhoto(id) {
             selectedPhotosArray = selectedPhotosArray.filter(p => p.id !== id);
@@ -1230,7 +1250,7 @@
         document.getElementById('photoForm').addEventListener('submit', function(e) {
             e.preventDefault();
             if (selectedPhotosArray.length === 0) {
-                mostrarAviso("Por favor, selecciona al menos una foto.");
+                mostrarAviso("Por favor, selecciona o pega al menos una foto.");
                 return;
             }
 
