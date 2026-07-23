@@ -9,7 +9,7 @@
         :root {
             --binter-green: #40af35;
             --binter-green-dark: #2d8225;
-            --bg-body: #f3f6f3;
+            --binter-bg-green: #41af35;
             --card-bg: #ffffff;
             --text-color: #2c3e50;
             --border-color: #cfd8dc;
@@ -25,28 +25,24 @@
         }
 
         body {
-            background-color: var(--bg-body);
+            background-color: var(--binter-bg-green);
             color: var(--text-color);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
         }
 
-        /* CABECERA Y NAVEGACIÓN */
-        header {
-            background-color: var(--binter-green);
-            padding: 15px 25px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-
-        .nav-container {
-            max-width: 950px;
-            margin: 0 auto;
+        /* BARRA DE NAVEGACIÓN */
+        nav {
+            background-color: rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(8px);
+            padding: 12px 25px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
         .brand-logo {
@@ -61,21 +57,25 @@
             font-family: 'Montserrat', sans-serif;
             font-style: italic;
             font-weight: 900;
-            font-size: 32px;
+            font-size: 34px;
             color: #ffffff;
             letter-spacing: -1px;
+            text-shadow: 1px 2px 4px rgba(0,0,0,0.2);
         }
 
         .brand-logo .binter-sub {
+            font-family: 'Open Sans', sans-serif;
             font-style: italic;
             font-size: 11px;
             color: #ffffff;
-            opacity: 0.9;
+            margin-top: -2px;
+            opacity: 0.95;
+            letter-spacing: 0.5px;
         }
 
         .nav-links {
             display: flex;
-            gap: 8px;
+            gap: 10px;
             flex-wrap: wrap;
         }
 
@@ -87,6 +87,7 @@
             border-radius: 20px;
             font-weight: 700;
             cursor: pointer;
+            transition: all 0.25s ease;
             font-size: 13px;
         }
 
@@ -95,167 +96,94 @@
             color: var(--binter-green-dark);
         }
 
-        /* CONTENEDOR DE CONTENIDO */
-        main {
-            flex: 1;
-            width: 100%;
-            max-width: 950px;
-            margin: 30px auto;
-            padding: 0 20px;
-        }
-
-        /* VISTAS */
+        /* VISTAS / PESTAÑAS */
         .view {
             display: none;
+            width: 100%;
+            max-width: 950px;
+            margin: 0 auto;
+            padding: 30px 20px;
+            animation: fadeIn 0.3s ease-in-out;
         }
 
-        /* Aseguramos que la vista activa sea visible siempre */
         .view.active {
-            display: block !important;
+            display: block;
         }
 
-        /* PORTADA */
-        .home-card {
-            background: #ffffff;
-            border-radius: 16px;
-            padding: 40px 20px;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* PORTADA PRINCIPAL */
+        #view-home {
             text-align: center;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.06);
-            border-top: 6px solid var(--binter-green);
+            color: white;
+            padding-top: 40px;
         }
 
-        .hero-title {
+        .hero-logo {
             font-family: 'Montserrat', sans-serif;
             font-style: italic;
             font-weight: 900;
-            font-size: 65px;
-            color: var(--binter-green-dark);
-            line-height: 1;
+            font-size: 80px;
+            color: #ffffff;
+            line-height: 0.9;
+            margin-bottom: 5px;
+            text-shadow: 2px 4px 8px rgba(0,0,0,0.15);
         }
 
         .hero-sub {
             font-style: italic;
-            font-size: 18px;
-            color: #607d8b;
-            margin-bottom: 30px;
+            font-size: 20px;
+            margin-bottom: 50px;
+            letter-spacing: 1px;
         }
 
         .modo-canario-badge {
-            background-color: #eef7ee;
-            border: 2px solid var(--binter-green);
+            background: #ffffff;
             color: var(--binter-green-dark);
             display: inline-flex;
             align-items: center;
-            gap: 10px;
-            padding: 10px 24px;
+            gap: 12px;
+            padding: 12px 28px;
             border-radius: 50px;
-            font-size: 22px;
+            font-size: 28px;
             font-weight: 700;
-            margin-bottom: 35px;
+            margin-bottom: 50px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .toggle-icon {
+            width: 42px;
+            height: 24px;
+            background-color: var(--binter-green);
+            border-radius: 12px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .toggle-icon::after {
+            content: '🌴';
+            font-size: 14px;
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .hero-buttons {
             display: flex;
             justify-content: center;
-            gap: 15px;
+            gap: 20px;
             flex-wrap: wrap;
         }
 
         .btn-hero {
-            background-color: var(--binter-green);
-            color: white;
-            padding: 14px 28px;
-            border-radius: 30px;
-            font-size: 16px;
-            font-weight: 700;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(64, 175, 53, 0.3);
-        }
-
-        .btn-hero:hover {
-            background-color: var(--binter-green-dark);
-        }
-
-        /* TARJETAS Y FORMULARIOS */
-        .card {
-            background-color: var(--card-bg);
-            border-radius: 16px;
-            padding: 30px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.06);
-        }
-
-        .card-title {
-            color: var(--binter-green-dark);
-            font-size: 22px;
-            font-weight: 700;
-            margin-bottom: 25px;
-            border-bottom: 3px solid var(--binter-green);
-            padding-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .full-width {
-            grid-column: 1 / -1;
-        }
-
-        label {
-            font-weight: 600;
-            font-size: 14px;
-            margin-bottom: 8px;
-            color: #455a64;
-        }
-
-        input[type="text"], input[type="password"] {
-            padding: 12px 15px;
-            border: 1.5px solid var(--border-color);
-            border-radius: 8px;
-            font-size: 15px;
-            outline: none;
-        }
-
-        input[type="text"]:focus, input[type="password"]:focus {
-            border-color: var(--binter-green);
-        }
-
-        .file-upload-zone {
-            border: 2px dashed var(--binter-green);
-            background-color: #f7faf7;
-            border-radius: 10px;
-            padding: 25px;
-            text-align: center;
-            position: relative;
-            cursor: pointer;
-        }
-
-        .file-upload-zone input[type="file"] {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            opacity: 0;
-            cursor: pointer;
-        }
-
-        .file-name {
-            margin-top: 8px;
-            font-weight: 600;
-            color: var(--binter-green-dark);
-            font-size: 13px;
-        }
-
-        .btn-submit {
-            background-color: var(--binter-green);
-            color: white;
-            border
+            background-color: #ffffff
