@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Binter Canarias - Gestión de Rutas</title>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,800;1,900&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --binter-green: #40af35;
@@ -34,9 +34,9 @@
 
         /* BARRA DE NAVEGACIÓN */
         nav {
-            background-color: rgba(0, 0, 0, 0.2); /* Fondo ligeramente más oscuro para el logo blanco */
+            background-color: rgba(0, 0, 0, 0.15);
             backdrop-filter: blur(8px);
-            padding: 10px 25px; /* Ajuste leve de padding */
+            padding: 12px 25px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -49,14 +49,15 @@
             cursor: pointer;
             text-decoration: none;
             display: flex;
-            align-items: center; /* Centrar verticalmente */
+            align-items: center;
         }
 
-        /* Estilos para el logo SVG original de Binter */
-        .binter-logo-svg {
-            height: 40px; /* Tamaño del logo en la nav */
+        /* LOGO EN LA BARRA SUPERIOR */
+        .img-logo-nav {
+            height: 38px;
             width: auto;
-            display: block;
+            object-fit: contain;
+            filter: drop-shadow(1px 2px 4px rgba(0, 0, 0, 0.2));
         }
 
         .nav-links {
@@ -105,51 +106,53 @@
         #view-home {
             text-align: center;
             color: white;
-            padding-top: 50px;
+            padding-top: 40px;
         }
 
-        /* Logo grande en la portada principal */
-        .hero-logo-container {
-            margin-bottom: 20px;
+        .hero-logo-wrapper {
+            margin-bottom: 25px;
         }
-        
-        .hero-binter-logo-svg {
-            height: 100px; /* Tamaño grande para la portada */
+
+        /* LOGO PRINCIPAL PORTADA */
+        .img-logo-hero {
+            height: 90px;
+            max-width: 90%;
             width: auto;
-            display: block;
-            margin: 0 auto;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.15));
         }
 
-        /* Estilos para la sección Modo Canario */
+        /* BADGE MODO CANARIO CON LA PALMERA ORIGINAL */
         .modo-canario-badge {
             background: #ffffff;
             color: var(--binter-green-dark);
             display: inline-flex;
             align-items: center;
-            gap: 15px; /* Más espacio */
-            padding: 15px 35px; /* Más padding */
+            gap: 14px;
+            padding: 12px 28px;
             border-radius: 50px;
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 50px;
+            font-size: 26px;
+            font-weight: 800;
+            margin-bottom: 40px;
             box-shadow: 0 8px 20px rgba(0,0,0,0.15);
         }
 
-        /* Contenedor del icono de la palmera */
-        .palmera-icon-container {
-            background: #ffffff;
+        /* CONTENEDOR DE LA PALMERA */
+        .palmera-icon-wrapper {
+            width: 42px;
+            height: 42px;
+            background-color: #ffffff;
             border-radius: 50%;
-            padding: 10px; /* Espacio alrededor de la palmera */
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            overflow: hidden;
         }
 
-        /* Icono de la palmera SVG */
-        .palmera-svg {
-            height: 35px; /* Tamaño de la palmera */
-            width: auto;
+        .img-palmera {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
         }
 
         .hero-buttons {
@@ -177,52 +180,240 @@
             box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
 
-        /* [Resto de los estilos de formularios, tarjetas, etc. se mantienen igual] */
-        .card { background-color: var(--card-bg); border-radius: 16px; padding: 35px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
-        .card-title { color: var(--binter-green-dark); font-size: 24px; font-weight: 700; margin-bottom: 25px; border-bottom: 3px solid var(--binter-green); padding-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
-        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
-        .form-group { display: flex; flex-direction: column; }
-        .full-width { grid-column: 1 / -1; }
-        label { font-weight: 600; font-size: 14px; margin-bottom: 8px; color: #455a64; }
-        input[type="text"], input[type="password"] { padding: 12px 15px; border: 1.5px solid var(--border-color); border-radius: 8px; font-size: 15px; outline: none; transition: border-color 0.2s; }
-        input[type="text"]:focus, input[type="password"]:focus { border-color: var(--binter-green); }
-        .file-upload-zone { border: 2px dashed var(--binter-green); background-color: #f1f8f3; border-radius: 10px; padding: 20px; text-align: center; cursor: pointer; position: relative; transition: background 0.2s; }
-        .file-upload-zone:hover { background-color: #e2f2e5; }
-        .file-upload-zone input[type="file"] { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
-        .file-name { margin-top: 8px; font-weight: 600; color: var(--binter-green-dark); font-size: 13px; }
-        .btn-submit { background-color: var(--binter-green); color: white; border: none; width: 100%; padding: 15px; font-size: 16px; font-weight: 700; border-radius: 8px; cursor: pointer; margin-top: 25px; transition: background 0.2s; }
-        .btn-submit:hover { background-color: var(--binter-green-dark); }
-        .routes-list { display: flex; flex-direction: column; gap: 20px; }
-        .route-card { background: #ffffff; border-radius: 12px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 15px; align-items: center; border-left: 6px solid var(--binter-green); }
-        .route-item-title { font-size: 12px; color: #78909c; text-transform: uppercase; font-weight: 700; }
-        .route-item-value { font-size: 15px; font-weight: 700; color: #263238; margin-top: 3px; }
-        .btn-download { background-color: var(--binter-green); color: white; padding: 10px 16px; border-radius: 6px; text-decoration: none; font-weight: 700; font-size: 13px; display: inline-block; text-align: center; transition: background 0.2s; border: none; cursor: pointer; }
-        .btn-download:hover { background-color: var(--binter-green-dark); }
-        .btn-edit { background-color: var(--warning-color); color: white; padding: 8px 12px; border-radius: 6px; font-weight: 700; font-size: 13px; border: none; cursor: pointer; width: 100%; margin-bottom: 5px; }
-        .btn-delete { background-color: var(--danger-color); color: white; padding: 8px 12px; border-radius: 6px; font-weight: 700; font-size: 13px; border: none; cursor: pointer; width: 100%; }
-        .empty-routes { text-align: center; padding: 40px; color: #78909c; font-size: 16px; }
-        .admin-login-box { text-align: center; max-width: 400px; margin: 40px auto; }
-        .admin-login-box input { width: 100%; margin-bottom: 15px; text-align: center; font-size: 18px; letter-spacing: 3px; }
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 2000; justify-content: center; align-items: center; padding: 20px; }
-        .modal.active { display: flex; }
-        .modal-content { background: white; border-radius: 12px; padding: 30px; width: 100%; max-width: 600px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); max-height: 90vh; overflow-y: auto; }
+        /* FORMULARIOS Y TARJETAS */
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            padding: 35px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .card-title {
+            color: var(--binter-green-dark);
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            border-bottom: 3px solid var(--binter-green);
+            padding-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 8px;
+            color: #455a64;
+        }
+
+        input[type="text"], input[type="password"] {
+            padding: 12px 15px;
+            border: 1.5px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 15px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        input[type="text"]:focus, input[type="password"]:focus {
+            border-color: var(--binter-green);
+        }
+
+        .file-upload-zone {
+            border: 2px dashed var(--binter-green);
+            background-color: #f1f8f3;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            transition: background 0.2s;
+        }
+
+        .file-upload-zone:hover {
+            background-color: #e2f2e5;
+        }
+
+        .file-upload-zone input[type="file"] {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .file-name {
+            margin-top: 8px;
+            font-weight: 600;
+            color: var(--binter-green-dark);
+            font-size: 13px;
+        }
+
+        .btn-submit {
+            background-color: var(--binter-green);
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 15px;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 25px;
+            transition: background 0.2s;
+        }
+
+        .btn-submit:hover {
+            background-color: var(--binter-green-dark);
+        }
+
+        /* LISTAS DE RUTAS */
+        .routes-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .route-card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 15px;
+            align-items: center;
+            border-left: 6px solid var(--binter-green);
+        }
+
+        .route-item-title {
+            font-size: 12px;
+            color: #78909c;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .route-item-value {
+            font-size: 15px;
+            font-weight: 700;
+            color: #263238;
+            margin-top: 3px;
+        }
+
+        .btn-download {
+            background-color: var(--binter-green);
+            color: white;
+            padding: 10px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 13px;
+            display: inline-block;
+            text-align: center;
+            transition: background 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-download:hover {
+            background-color: var(--binter-green-dark);
+        }
+
+        .btn-edit {
+            background-color: var(--warning-color);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 13px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 5px;
+        }
+
+        .btn-delete {
+            background-color: var(--danger-color);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 13px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .empty-routes {
+            text-align: center;
+            padding: 40px;
+            color: #78909c;
+            font-size: 16px;
+        }
+
+        /* LOGIN ADMIN */
+        .admin-login-box {
+            text-align: center;
+            max-width: 400px;
+            margin: 40px auto;
+        }
+
+        .admin-login-box input {
+            width: 100%;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 18px;
+            letter-spacing: 3px;
+        }
+
+        /* MODAL */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            width: 100%;
+            max-width: 600px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
     </style>
 </head>
 <body>
 
     <nav>
         <a class="brand-logo" onclick="switchTab('home')">
-            <svg class="binter-logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 40">
-                <defs>
-                    <style>.cls-1{fill:#fff;}.cls-2{fill:rgba(255,255,255,0.8);font-size:8px;font-family:OpenSans-Italic, Open Sans;font-style:italic;}</style>
-                </defs>
-                <g id="Layer_2" data-name="Layer 2">
-                    <g id="Layer_1-2" data-name="Layer 1">
-                        <path class="cls-1" d="M12,5.16a7.19,7.19,0,0,1,6.58,3.61l-.66,1A5.76,5.76,0,0,0,12.35,6.6,5.13,5.13,0,0,0,7.1,11.37v.08a5,5,0,0,0,5.17,5.08,5.43,5.43,0,0,0,4.68-2.61l.73.91A6.74,6.74,0,0,1,12.18,18,6.62,6.62,0,0,1,5.55,11.37v-.08A6.72,6.72,0,0,1,12,5.16Zm12.33.17h1.49l.13.1a3.84,3.84,0,0,1,2.56-1A3.76,3.76,0,0,1,31,6.7a3.8,3.8,0,0,1,1.15,2.77V17.8H30.63V9.6a2.23,2.23,0,0,0-.68-1.63,2.2,2.2,0,0,0-1.58-.65,2.37,2.37,0,0,0-2.45,2.4v8.08H24.33V5.33Zm15.54,0H41.36v1.44a4.11,4.11,0,0,1,3.2-1.61,4,4,0,0,1,2.83,1.1,3.84,3.84,0,0,1,1.12,2.79v8.75H47V9.22a2.37,2.37,0,0,0-2.46-2.4A2.39,2.39,0,0,0,42.13,9v8.8H40.58v-11a3.29,3.29,0,0,0-.71-2.41Zm9.66-3V5.33h1.5l.13.1a4.24,4.24,0,0,1,3-1.6,4,4,0,0,1,2.78,1.07,3.65,3.65,0,0,1,1.1,2.69v10.2H58V9.38a2.31,2.31,0,0,0-2.42-2.39,2.34,2.34,0,0,0-2.36,2.39v8.43H51.72V2.3Zm13.8,3H69l.13.1a3.81,3.81,0,0,1,2.55-1A3.8,3.8,0,0,1,74.2,6.73a3.83,3.83,0,0,1,1.16,2.77V17.8H73.81V9.6a2.23,2.23,0,0,0-.68-1.63,2.18,2.18,0,0,0-1.58-.65,2.37,2.37,0,0,0-2.45,2.4v8.08H67.52V5.33Zm15.52.1h1.51l.13.1a3.85,3.85,0,0,1,2.56-1A3.76,3.76,0,0,1,89.79,6.7a3.83,3.83,0,0,1,1.15,2.77V17.8H89.39V9.6a2.23,2.23,0,0,0-.68-1.63,2.18,2.18,0,0,0-1.58-.65,2.37,2.37,0,0,0-2.45,2.4v8.08H83.1V5.43Zm9.1,0h1.5l.12.1a3.68,3.68,0,0,1,2.4-1.1A3.76,3.76,0,0,1,98.66,6.7,3.66,3.66,0,0,1,99.8,9.47v8.33H98.25V9.47A2.22,2.22,0,0,0,97.56,7.9a2.15,2.15,0,0,0-1.57-.6,2.37,2.37,0,0,0-2.44,2.4v8.1H92.21V5.43ZM1.81,26.43h1.36V34.8H8.81V36H1.81Zm11.23,0h1.36V36H13Zm7.76.06V36H20.73V27.81a4.26,4.26,0,0,1,3.13-1.42A3.87,3.87,0,0,1,26.6,27.5,3.66,3.66,0,0,1,27.7,30.2v5.8H26.35V30.13a2.3,2.3,0,0,0-.68-1.7,2.3,2.3,0,0,0-1.62-.64A2.39,2.39,0,0,0,21.6,30.2v5.8H20.24V27.81a4,4,0,0,0-.73-2.47Zm12.18,0V36h1.35V27.79a4.18,4.18,0,0,1,3.11-1.4a3.82,3.82,0,0,1,2.7,1.06,3.66,3.66,0,0,1,1.1,2.72v5.83H39.7V30.12a2.31,2.31,0,0,0-.69-1.69,2.26,2.26,0,0,0-1.6-.64,2.39,2.39,0,0,0-2.45,2.41v5.8H33.62V27.79a4.08,4.08,0,0,0-.71-2.45Zm14.22,2.76A4.55,4.55,0,0,1,49.2,28a4.49,4.49,0,0,1,3.19,1.21,4.2,4.2,0,0,1,1.26,3.08v.22H46.61a3.09,3.09,0,0,0,1,2.22,3.18,3.18,0,0,0,2.16.73,4.41,4.41,0,0,0,2.69-.95l.66.92a5.55,5.55,0,0,1-3.37,1.18,4.4,4.4,0,0,1-3.18-1.19,4.36,4.36,0,0,1-1.16-3.21,4.29,4.29,0,0,1,1.2-3.14Zm.93.93a3.11,3.11,0,0,0-1,2.26h6.72v-.08a3.11,3.11,0,0,0-1-2.28,3.12,3.12,0,0,0-2.19-.83,3.17,3.17,0,0,0-2.19.86Zm13.56-1.1v1.17h1.35l.1.13a3.5,3.5,0,0,1,2.39-1.3,3.59,3.59,0,0,1,2.67.93,3.31,3.31,0,0,1,1,2.45v6.08h-1.36v-6.08a2.1,2.1,0,0,0-.68-1.5,2.1,2.1,0,0,0-1.5-.54A2.3,2.3,0,0,0,61,29.9V36H59.61V28.18a3,3,0,0,0-.68-2.23l-1.36.17Zm12.79-2.7h1.35V36H70.19V30.12a2.3,2.3,0,0,0-.68-1.7,2.26,2.26,0,0,0-1.61-.64A2.39,2.39,0,0,0,65.45,30.2v5.8H64.09V27.79a4.08,4.08,0,0,0-.71-2.45Zm7.8,0V36h1.35V27.79a4.23,4.23,0,0,1,3.12-1.42A3.87,3.87,0,0,1,81.1,27.5,3.64,3.64,0,0,1,82.2,30.2v5.8H80.85V30.13A2.3,2.3,0,0,0,80.17,28.4,2.31,2.31,0,0,0,78.56,27.8A2.39,2.39,0,0,0,76.11,30.2v5.8H74.75V27.81a4,4,0,0,0-.72-2.47Zm12.18,0V36H87.62V27.79a4.18,4.18,0,0,1,3.11-1.4a3.82,3.82,0,0,1,2.7,1.06,3.66,3.66,0,0,1,1.1,2.72v5.83h-1.35V30.12a2.31,2.31,0,0,0-.69-1.69,2.26,2.26,0,0,0-1.6-.64A2.39,2.39,0,0,0,88.49,30.21v5.79H87.13V27.79A4.08,4.08,0,0,0,86.42,25.34Z"/>
-                        <text class="cls-2" transform="translate(14.33 34.6)">Líneas aéreas de Canarias</text>
-                    </g>
-                </g>
-            </svg>
+            <img src="logo-binter.png" alt="Binter Canarias" class="img-logo-nav" onerror="this.onerror=null; this.outerHTML='<span style=\'font-family:Montserrat; font-style:italic; font-weight:900; font-size:26px; color:#fff;\'>Binter</span>';">
         </a>
         <div class="nav-links">
             <button class="nav-btn active" id="nav-home" onclick="switchTab('home')">Inicio</button>
@@ -233,27 +424,14 @@
     </nav>
 
     <div id="view-home" class="view active">
-        <div class="hero-logo-container">
-            <svg class="hero-binter-logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 40">
-                <defs>
-                    <style>.cls-3{fill:#fff;}.cls-4{fill:rgba(255,255,255,0.8);font-size:8px;font-family:OpenSans-Italic, Open Sans;font-style:italic;}</style>
-                </defs>
-                <g id="Layer_2_Hero" data-name="Layer 2 Hero">
-                    <g id="Layer_1_Hero_2" data-name="Layer 1 Hero 2">
-                        <path class="cls-3" d="M12,5.16a7.19,7.19,0,0,1,6.58,3.61l-.66,1A5.76,5.76,0,0,0,12.35,6.6,5.13,5.13,0,0,0,7.1,11.37v.08a5,5,0,0,0,5.17,5.08,5.43,5.43,0,0,0,4.68-2.61l.73.91A6.74,6.74,0,0,1,12.18,18,6.62,6.62,0,0,1,5.55,11.37v-.08A6.72,6.72,0,0,1,12,5.16Zm12.33.17h1.49l.13.1a3.84,3.84,0,0,1,2.56-1A3.76,3.76,0,0,1,31,6.7a3.8,3.8,0,0,1,1.15,2.77V17.8H30.63V9.6a2.23,2.23,0,0,0-.68-1.63,2.2,2.2,0,0,0-1.58-.65,2.37,2.37,0,0,0-2.45,2.4v8.08H24.33V5.33Zm15.54,0H41.36v1.44a4.11,4.11,0,0,1,3.2-1.61,4,4,0,0,1,2.83,1.1,3.84,3.84,0,0,1,1.12,2.79v8.75H47V9.22a2.37,2.37,0,0,0-2.46-2.4A2.39,2.39,0,0,0,42.13,9v8.8H40.58v-11a3.29,3.29,0,0,0-.71-2.41Zm9.66-3V5.33h1.5l.13.1a4.24,4.24,0,0,1,3-1.6,4,4,0,0,1,2.78,1.07,3.65,3.65,0,0,1,1.1,2.69v10.2H58V9.38a2.31,2.31,0,0,0-2.42-2.39,2.34,2.34,0,0,0-2.36,2.39v8.43H51.72V2.3Zm13.8,3H69l.13.1a3.81,3.81,0,0,1,2.55-1A3.8,3.8,0,0,1,74.2,6.73a3.83,3.83,0,0,1,1.16,2.77V17.8H73.81V9.6a2.23,2.23,0,0,0-.68-1.63,2.18,2.18,0,0,0-1.58-.65,2.37,2.37,0,0,0-2.45,2.4v8.08H67.52V5.33Zm15.52.1h1.51l.13.1a3.85,3.85,0,0,1,2.56-1A3.76,3.76,0,0,1,89.79,6.7a3.83,3.83,0,0,1,1.15,2.77V17.8H89.39V9.6a2.23,2.23,0,0,0-.68-1.63,2.18,2.18,0,0,0-1.58-.65,2.37,2.37,0,0,0-2.45,2.4v8.08H83.1V5.43Zm9.1,0h1.5l.12.1a3.68,3.68,0,0,1,2.4-1.1A3.76,3.76,0,0,1,98.66,6.7,3.66,3.66,0,0,1,99.8,9.47v8.33H98.25V9.47A2.22,2.22,0,0,0,97.56,7.9a2.15,2.15,0,0,0-1.57-.6,2.37,2.37,0,0,0-2.44,2.4v8.1H92.21V5.43ZM1.81,26.43h1.36V34.8H8.81V36H1.81Zm11.23,0h1.36V36H13Zm7.76.06V36H20.73V27.81a4.26,4.26,0,0,1,3.13-1.42A3.87,3.87,0,0,1,26.6,27.5,3.66,3.66,0,0,1,27.7,30.2v5.8H26.35V30.13a2.3,2.3,0,0,0-.68-1.7,2.3,2.3,0,0,0-1.62-.64A2.39,2.39,0,0,0,21.6,30.2v5.8H20.24V27.81a4,4,0,0,0-.73-2.47Zm12.18,0V36h1.35V27.79a4.18,4.18,0,0,1,3.11-1.4a3.82,3.82,0,0,1,2.7,1.06,3.66,3.66,0,0,1,1.1,2.72v5.83H39.7V30.12a2.31,2.31,0,0,0-.69-1.69,2.26,2.26,0,0,0-1.6-.64,2.39,2.39,0,0,0-2.45,2.41v5.8H33.62V27.79a4.08,4.08,0,0,0-.71-2.45Zm14.22,2.76A4.55,4.55,0,0,1,49.2,28a4.49,4.49,0,0,1,3.19,1.21,4.2,4.2,0,0,1,1.26,3.08v.22H46.61a3.09,3.09,0,0,0,1,2.22,3.18,3.18,0,0,0,2.16.73,4.41,4.41,0,0,0,2.69-.95l.66.92a5.55,5.55,0,0,1-3.37,1.18,4.4,4.4,0,0,1-3.18-1.19,4.36,4.36,0,0,1-1.16-3.21,4.36,4.36,0,0,1,1.2-3.14Zm.93.93a3.11,3.11,0,0,0-1,2.26h6.72v-.08a3.11,3.11,0,0,0-1-2.28,3.12,3.12,0,0,0-2.19-.83,3.17,3.17,0,0,0-2.19.86Zm13.56-1.1v1.17h1.35l.1.13a3.5,3.5,0,0,1,2.39-1.3,3.59,3.59,0,0,1,2.67.93,3.31,3.31,0,0,1,1,2.45v6.08h-1.36v-6.08a2.1,2.1,0,0,0-.68-1.5,2.1,2.1,0,0,0-1.5-.54A2.3,2.3,0,0,0,61,29.9V36H59.61V28.18a3,3,0,0,0-.68-2.23l-1.36.17Zm12.79-2.7h1.35V36H70.19V30.12a2.3,2.3,0,0,0-.68-1.7,2.26,2.26,0,0,0-1.61-.64A2.39,2.39,0,0,0,65.45,30.2v5.8H64.09V27.79a4.08,4.08,0,0,0-.71-2.45Zm7.8,0V36h1.35V27.79a4.23,4.23,0,0,1,3.12-1.42A3.87,3.87,0,0,1,81.1,27.5,3.64,3.64,0,0,1,82.2,30.2v5.8H80.85V30.13A2.3,2.3,0,0,0,80.17,28.4,2.31,2.31,0,0,0,78.56,27.8A2.39,2.39,0,0,0,76.11,30.2v5.8H74.75V27.81a4,4,0,0,0-.72-2.47Zm12.18,0V36H87.62V27.79a4.18,4.18,0,0,1,3.11-1.4a3.82,3.82,0,0,1,2.7,1.06,3.66,3.66,0,0,1,1.1,2.72v5.83h-1.35V30.12a2.31,2.31,0,0,0-.69-1.69,2.26,2.26,0,0,0-1.6-.64A2.39,2.39,0,0,0,88.49,30.21v5.79H87.13V27.79A4.08,4.08,0,0,0,86.42,25.34Z"/>
-                        <text class="cls-4" transform="translate(14.33 34.6)">Líneas aéreas de Canarias</text>
-                    </g>
-                </g>
-            </svg>
+        <div class="hero-logo-wrapper">
+            <img src="logo-binter.png" alt="Binter Canarias" class="img-logo-hero" onerror="this.onerror=null; this.outerHTML='<h1 style=\'font-family:Montserrat; font-style:italic; font-size:65px; color:#fff; text-shadow:2px 4px 8px rgba(0,0,0,0.2);\'>Binter</h1><p style=\'font-style:italic; font-size:18px;\'>Líneas aéreas de Canarias</p>';">
         </div>
         
         <div>
             <div class="modo-canario-badge">
-                <div class="palmera-icon-container">
-                    <svg class="palmera-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
-                        <defs><style>.cls-5{fill:#40af35;}</style></defs>
-                        <path class="cls-5" d="M19.16,33.15V22.42c-.7-.41-2.11-.91-2.92-.9-.76,0-2.31.5-2.82.91a8.67,8.67,0,0,1,2.32,1.38V33.15h3.42Zm1.68,0V22.42c.7-.41,2.11-.91,2.92-.9.76,0,2.31.5,2.82.91A8.67,8.67,0,0,0,24.26,23.8V33.15Zm-14-15.11a14.28,14.28,0,0,1,8.37,5.59A14.22,14.22,0,0,1,25.26,18a14.22,14.22,0,0,1,10.11,5.59L34.19,25A12.56,12.56,0,0,0,25.26,20.09,12.56,12.56,0,0,0,16.33,25a12.56,12.56,0,0,0-8.93-4.91ZM20,17.26A7.26,7.26,0,1,1,27.26,10,7.27,7.27,0,0,1,20,17.26Z"/>
-                    </svg>
+                <div class="palmera-icon-wrapper">
+                    <img src="palmera.png" alt="Palmera" class="img-palmera" onerror="this.onerror=null; this.parentNode.innerHTML='🌴';">
                 </div>
                 <span>Vuela en #ModoCanario</span>
             </div>
@@ -270,24 +448,322 @@
             <h2 class="card-title">Subir Nueva Ruta</h2>
             <form id="routeForm">
                 <div class="form-grid">
-                    <div class="form-group"><label for="vuelo">Nº Vuelo</label><input type="text" id="vuelo" placeholder="Ej: NT 221" required></div>
-                    <div class="form-group"><label for="icao">ICAO (Origen - Destino)</label><input type="text" id="icao" placeholder="Ej: GCXO - GCLP" required></div>
-                    <div class="form-group"><label for="tiempo">Tiempo de Vuelo</label><input type="text" id="tiempo" placeholder="Ej: 00h 35m" required></div>
-                    <div class="form-group"><label for="estacionamiento">Estacionamiento</label><input type="text" id="estacionamiento" placeholder="Ej: Stand 12" required></div>
-                    <div class="form-group full-width"><label for="ruta">Ruta</label><input type="text" id="ruta" placeholder="Ej: LERAM W110 SIMUR" required></div>
-                    <div class="form-group full-width"><label>Plan de Vuelo</label><div class="file-upload-zone"><span style="font-size: 30px;">📄</span><p style="margin-top:5px; color: #555;"> Haz clic o arrastra aquí tu Plan de Vuelo</p><input type="file" id="planVuelo" required><div class="file-name" id="fileNameDisplay">Ningún archivo seleccionado</div></div></div>
+                    <div class="form-group">
+                        <label for="vuelo">Nº Vuelo</label>
+                        <input type="text" id="vuelo" placeholder="Ej: NT 221" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="icao">ICAO (Origen - Destino)</label>
+                        <input type="text" id="icao" placeholder="Ej: GCXO - GCLP" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tiempo">Tiempo de Vuelo</label>
+                        <input type="text" id="tiempo" placeholder="Ej: 00h 35m" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="estacionamiento">Estacionamiento</label>
+                        <input type="text" id="estacionamiento" placeholder="Ej: Stand 12" required>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="ruta">Ruta</label>
+                        <input type="text" id="ruta" placeholder="Ej: LERAM W110 SIMUR" required>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label>Plan de Vuelo</label>
+                        <div class="file-upload-zone">
+                            <span style="font-size: 30px;">📄</span>
+                            <p style="margin-top:5px; color: #555;">Haz clic o arrastra aquí tu Plan de Vuelo</p>
+                            <input type="file" id="planVuelo" required>
+                            <div class="file-name" id="fileNameDisplay">Ningún archivo seleccionado</div>
+                        </div>
+                    </div>
                 </div>
+
                 <button type="submit" class="btn-submit">Guardar Ruta</button>
             </form>
         </div>
     </div>
-    <div id="view-routes" class="view"><div class="card"><h2 class="card-title">Rutas Guardadas</h2><div id="routesContainer" class="routes-list"></div></div></div>
-    <div id="view-admin" class="view"><div class="card"><div id="admin-auth" class="admin-login-box"><h2 style="color: var(--binter-green-dark); margin-bottom: 10px;">Acceso Restringido</h2><p style="color: #666; margin-bottom: 20px;">Introduce el código de administrador para gestionar las rutas.</p><input type="password" id="adminCodeInput" placeholder="Código de acceso"><button class="btn-submit" onclick="checkAdminCode()" style="margin-top:0;">Acceder</button></div><div id="admin-panel" style="display: none;"><h2 class="card-title"><span>Panel de Administración</span><button onclick="logoutAdmin()" style="font-size: 12px; padding: 5px 10px; background: #666; color: white; border: none; border-radius: 4px; cursor: pointer;">Cerrar Sesión</button></h2><div id="adminRoutesContainer" class="routes-list"></div></div></div></div>
-    <div id="editModal" class="modal"><div class="modal-content"><h3 style="margin-bottom: 20px; color: var(--binter-green-dark);">Editar Ruta</h3><form id="editForm"><input type="hidden" id="edit-id"><div class="form-grid"><div class="form-group"><label>Nº Vuelo</label><input type="text" id="edit-vuelo" required></div><div class="form-group"><label>ICAO</label><input type="text" id="edit-icao" required></div><div class="form-group"><label>Tiempo</label><input type="text" id="edit-tiempo" required></div><div class="form-group"><label>Estacionamiento</label><input type="text" id="edit-estacionamiento" required></div><div class="form-group full-width"><label>Ruta</label><input type="text" id="edit-ruta" required></div><div class="form-group full-width"><label>Actualizar Plan de Vuelo (Opcional)</label><div class="file-upload-zone"><span style="font-size: 24px;">🔄</span><p style="margin-top:2px; color: #555; font-size:13px;">Haz clic para reemplazar el archivo actual</p><input type="file" id="edit-planVuelo"><div class="file-name" id="editFileNameDisplay">Archivo actual conservado</div></div></div></div><div style="display: flex; gap: 10px; margin-top: 20px;"><button type="submit" class="btn-submit" style="margin-top:0;">Guardar Cambios</button><button type="button" class="btn-submit" style="margin-top:0; background: #78909c;" onclick="closeEditModal()">Cancelar</button></div></form></div></div>
+
+    <div id="view-routes" class="view">
+        <div class="card">
+            <h2 class="card-title">Rutas Guardadas</h2>
+            <div id="routesContainer" class="routes-list"></div>
+        </div>
+    </div>
+
+    <div id="view-admin" class="view">
+        <div class="card">
+            <div id="admin-auth" class="admin-login-box">
+                <h2 style="color: var(--binter-green-dark); margin-bottom: 10px;">Acceso Restringido</h2>
+                <p style="color: #666; margin-bottom: 20px;">Introduce el código de administrador para gestionar las rutas.</p>
+                <input type="password" id="adminCodeInput" placeholder="Código de acceso">
+                <button class="btn-submit" onclick="checkAdminCode()" style="margin-top:0;">Acceder</button>
+            </div>
+
+            <div id="admin-panel" style="display: none;">
+                <h2 class="card-title">
+                    <span>Panel de Administración</span>
+                    <button onclick="logoutAdmin()" style="font-size: 12px; padding: 5px 10px; background: #666; color: white; border: none; border-radius: 4px; cursor: pointer;">Cerrar Sesión</button>
+                </h2>
+                <div id="adminRoutesContainer" class="routes-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <h3 style="margin-bottom: 20px; color: var(--binter-green-dark);">Editar Ruta</h3>
+            <form id="editForm">
+                <input type="hidden" id="edit-id">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Nº Vuelo</label>
+                        <input type="text" id="edit-vuelo" required>
+                    </div>
+                    <div class="form-group">
+                        <label>ICAO</label>
+                        <input type="text" id="edit-icao" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Tiempo</label>
+                        <input type="text" id="edit-tiempo" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Estacionamiento</label>
+                        <input type="text" id="edit-estacionamiento" required>
+                    </div>
+                    <div class="form-group full-width">
+                        <label>Ruta</label>
+                        <input type="text" id="edit-ruta" required>
+                    </div>
+                    
+                    <div class="form-group full-width">
+                        <label>Actualizar Plan de Vuelo (Opcional)</label>
+                        <div class="file-upload-zone">
+                            <span style="font-size: 24px;">🔄</span>
+                            <p style="margin-top:2px; color: #555; font-size:13px;">Haz clic para reemplazar el archivo actual</p>
+                            <input type="file" id="edit-planVuelo">
+                            <div class="file-name" id="editFileNameDisplay">Archivo actual conservado</div>
+                        </div>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 10px; margin-top: 20px;">
+                    <button type="submit" class="btn-submit" style="margin-top:0;">Guardar Cambios</button>
+                    <button type="button" class="btn-submit" style="margin-top:0; background: #78909c;" onclick="closeEditModal()">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <script>
-        // ... (resto del script original)
-        const ADMIN_CODE="1989";let isAdminLoggedIn=false;let routesData=JSON.parse(localStorage.getItem('binter_routes'))||[];function switchTab(tabName){document.querySelectorAll('.view').forEach(view=>view.classList.remove('active'));document.querySelectorAll('.nav-btn').forEach(btn=>btn.classList.remove('active'));document.getElementById(`view-${tabName}`).classList.add('active');const activeNavBtn=document.getElementById(`nav-${tabName}`);if(activeNavBtn)activeNavBtn.classList.add('active');if(tabName==='routes')renderRoutes();if(tabName==='admin'&&isAdminLoggedIn)renderAdminRoutes()}function checkAdminCode(){const input=document.getElementById('adminCodeInput').value;if(input===ADMIN_CODE){isAdminLoggedIn=true;document.getElementById('admin-auth').style.display='none';document.getElementById('admin-panel').style.display='block';document.getElementById('adminCodeInput').value='';renderAdminRoutes()}else{alert('Código incorrecto. Inténtalo de nuevo.')}}function logoutAdmin(){isAdminLoggedIn=false;document.getElementById('admin-auth').style.display='block';document.getElementById('admin-panel').style.display='none'}const fileInput=document.getElementById('planVuelo');const fileNameDisplay=document.getElementById('fileNameDisplay');let selectedFileData=null;fileInput.addEventListener('change',function(e){const file=e.target.files[0];if(file){fileNameDisplay.textContent=file.name;const reader=new FileReader();reader.onload=function(event){selectedFileData={name:file.name,content:event.target.result}};reader.readAsDataURL(file)}else{fileNameDisplay.textContent="Ningún archivo seleccionado";selectedFileData=null}});const editFileInput=document.getElementById('edit-planVuelo');const editFileNameDisplay=document.getElementById('editFileNameDisplay');let editSelectedFileData=null;editFileInput.addEventListener('change',function(e){const file=e.target.files[0];if(file){editFileNameDisplay.textContent="Nuevo archivo: "+file.name;const reader=new FileReader();reader.onload=function(event){editSelectedFileData={name:file.name,content:event.target.result}};reader.readAsDataURL(file)}else{editFileNameDisplay.textContent="Archivo actual conservado";editSelectedFileData=null}});document.getElementById('routeForm').addEventListener('submit',function(e){e.preventDefault();if(!selectedFileData){alert("Por favor, selecciona un Plan de Vuelo.");return}const newRoute={id:Date.now(),vuelo:document.getElementById('vuelo').value,icao:document.getElementById('icao').value,tiempo:document.getElementById('tiempo').value,estacionamiento:document.getElementById('estacionamiento').value,ruta:document.getElementById('ruta').value,file:selectedFileData};routesData.unshift(newRoute);localStorage.setItem('binter_routes',JSON.stringify(routesData));this.reset();fileNameDisplay.textContent="Ningún archivo seleccionado";selectedFileData=null;switchTab('routes')});function renderRoutes(){const container=document.getElementById('routesContainer');if(routesData.length===0){container.innerHTML=`<div class="empty-routes">No hay rutas guardadas por el momento. ¡Añade una en "Subir tu ruta"!</div>`;return}container.innerHTML=routesData.map(route=>`<div class="route-card"><div><div class="route-item-title">Nº Vuelo</div><div class="route-item-value">${route.vuelo}</div></div><div><div class="route-item-title">ICAO</div><div class="route-item-value">${route.icao}</div></div><div><div class="route-item-title">Tiempo</div><div class="route-item-value">${route.tiempo}</div></div><div><div class="route-item-title">Estacionamiento</div><div class="route-item-value">${route.estacionamiento}</div></div><div><div class="route-item-title">Ruta</div><div class="route-item-value" style="font-size: 13px;">${route.ruta}</div></div><div><div class="route-item-title">Plan de Vuelo</div><a href="${route.file.content}" download="${route.file.name}" class="btn-download" style="margin-top: 5px;">Descargar</a></div></div>`).join('')}function renderAdminRoutes(){const container=document.getElementById('adminRoutesContainer');if(routesData.length===0){container.innerHTML=`<div class="empty-routes">No hay rutas para administrar.</div>`;return}container.innerHTML=routesData.map(route=>`<div class="route-card" style="border-left-color: var(--warning-color);"><div><div class="route-item-title">Nº Vuelo</div><div class="route-item-value">${route.vuelo}</div></div><div><div class="route-item-title">ICAO</div><div class="route-item-value">${route.icao}</div></div><div><div class="route-item-title">Tiempo</div><div class="route-item-value">${route.tiempo}</div></div><div><div class="route-item-title">Estacionamiento</div><div class="route-item-value">${route.estacionamiento}</div></div><div><div class="route-item-title">Ruta</div><div class="route-item-value" style="font-size: 13px;">${route.ruta}</div></div><div><button class="btn-edit" onclick="openEditModal(${route.id})">Editar</button><button class="btn-delete" onclick="deleteRoute(${route.id})">Eliminar</button></div></div>`).join('')}function deleteRoute(id){if(confirm('¿Estás seguro de que deseas eliminar esta ruta?')){routesData=routesData.filter(route=>route.id!==id);localStorage.setItem('binter_routes',JSON.stringify(routesData));renderAdminRoutes()}}function openEditModal(id){const route=routesData.find(r=>r.id===id);if(!route)return;document.getElementById('edit-id').value=route.id;document.getElementById('edit-vuelo').value=route.vuelo;document.getElementById('edit-icao').value=route.icao;document.getElementById('edit-tiempo').value=route.tiempo;document.getElementById('edit-estacionamiento').value=route.estacionamiento;document.getElementById('edit-ruta').value=route.ruta;editSelectedFileData=null;document.getElementById('edit-planVuelo').value="";editFileNameDisplay.textContent=`Actual: ${route.file.name}`;document.getElementById('editModal').classList.add('active')}function closeEditModal(){document.getElementById('editModal').classList.remove('active')}document.getElementById('editForm').addEventListener('submit',function(e){e.preventDefault();const id=Number(document.getElementById('edit-id').value);routesData=routesData.map(route=>{if(route.id===id){return{...route,vuelo:document.getElementById('edit-vuelo').value,icao:document.getElementById('edit-icao').value,tiempo:document.getElementById('edit-tiempo').value,estacionamiento:document.getElementById('edit-estacionamiento').value,ruta:document.getElementById('edit-ruta').value,file:editSelectedFileData?editSelectedFileData:route.file}}return route});localStorage.setItem('binter_routes',JSON.stringify(routesData));closeEditModal();renderAdminRoutes()});
+        const ADMIN_CODE = "1989";
+        let isAdminLoggedIn = false;
+        let routesData = JSON.parse(localStorage.getItem('binter_routes')) || [];
+
+        function switchTab(tabName) {
+            document.querySelectorAll('.view').forEach(view => view.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(`view-${tabName}`).classList.add('active');
+            
+            const activeNavBtn = document.getElementById(`nav-${tabName}`);
+            if (activeNavBtn) activeNavBtn.classList.add('active');
+
+            if (tabName === 'routes') renderRoutes();
+            if (tabName === 'admin' && isAdminLoggedIn) renderAdminRoutes();
+        }
+
+        function checkAdminCode() {
+            const input = document.getElementById('adminCodeInput').value;
+            if (input === ADMIN_CODE) {
+                isAdminLoggedIn = true;
+                document.getElementById('admin-auth').style.display = 'none';
+                document.getElementById('admin-panel').style.display = 'block';
+                document.getElementById('adminCodeInput').value = '';
+                renderAdminRoutes();
+            } else {
+                alert('Código incorrecto. Inténtalo de nuevo.');
+            }
+        }
+
+        function logoutAdmin() {
+            isAdminLoggedIn = false;
+            document.getElementById('admin-auth').style.display = 'block';
+            document.getElementById('admin-panel').style.display = 'none';
+        }
+
+        const fileInput = document.getElementById('planVuelo');
+        const fileNameDisplay = document.getElementById('fileNameDisplay');
+        let selectedFileData = null;
+
+        fileInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                fileNameDisplay.textContent = file.name;
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    selectedFileData = {
+                        name: file.name,
+                        content: event.target.result
+                    };
+                };
+                reader.readAsDataURL(file);
+            } else {
+                fileNameDisplay.textContent = "Ningún archivo seleccionado";
+                selectedFileData = null;
+            }
+        });
+
+        const editFileInput = document.getElementById('edit-planVuelo');
+        const editFileNameDisplay = document.getElementById('editFileNameDisplay');
+        let editSelectedFileData = null;
+
+        editFileInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                editFileNameDisplay.textContent = "Nuevo archivo: " + file.name;
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    editSelectedFileData = {
+                        name: file.name,
+                        content: event.target.result
+                    };
+                };
+                reader.readAsDataURL(file);
+            } else {
+                editFileNameDisplay.textContent = "Archivo actual conservado";
+                editSelectedFileData = null;
+            }
+        });
+
+        document.getElementById('routeForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (!selectedFileData) {
+                alert("Por favor, selecciona un Plan de Vuelo.");
+                return;
+            }
+
+            const newRoute = {
+                id: Date.now(),
+                vuelo: document.getElementById('vuelo').value,
+                icao: document.getElementById('icao').value,
+                tiempo: document.getElementById('tiempo').value,
+                estacionamiento: document.getElementById('estacionamiento').value,
+                ruta: document.getElementById('ruta').value,
+                file: selectedFileData
+            };
+
+            routesData.unshift(newRoute);
+            localStorage.setItem('binter_routes', JSON.stringify(routesData));
+
+            this.reset();
+            fileNameDisplay.textContent = "Ningún archivo seleccionado";
+            selectedFileData = null;
+            switchTab('routes');
+        });
+
+        function renderRoutes() {
+            const container = document.getElementById('routesContainer');
+            if (routesData.length === 0) {
+                container.innerHTML = `<div class="empty-routes">No hay rutas guardadas por el momento. ¡Añade una en "Subir tu ruta"!</div>`;
+                return;
+            }
+
+            container.innerHTML = routesData.map(route => `
+                <div class="route-card">
+                    <div><div class="route-item-title">Nº Vuelo</div><div class="route-item-value">${route.vuelo}</div></div>
+                    <div><div class="route-item-title">ICAO</div><div class="route-item-value">${route.icao}</div></div>
+                    <div><div class="route-item-title">Tiempo</div><div class="route-item-value">${route.tiempo}</div></div>
+                    <div><div class="route-item-title">Estacionamiento</div><div class="route-item-value">${route.estacionamiento}</div></div>
+                    <div><div class="route-item-title">Ruta</div><div class="route-item-value" style="font-size: 13px;">${route.ruta}</div></div>
+                    <div>
+                        <div class="route-item-title">Plan de Vuelo</div>
+                        <a href="${route.file.content}" download="${route.file.name}" class="btn-download" style="margin-top: 5px;">Descargar</a>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderAdminRoutes() {
+            const container = document.getElementById('adminRoutesContainer');
+            if (routesData.length === 0) {
+                container.innerHTML = `<div class="empty-routes">No hay rutas para administrar.</div>`;
+                return;
+            }
+
+            container.innerHTML = routesData.map(route => `
+                <div class="route-card" style="border-left-color: var(--warning-color);">
+                    <div><div class="route-item-title">Nº Vuelo</div><div class="route-item-value">${route.vuelo}</div></div>
+                    <div><div class="route-item-title">ICAO</div><div class="route-item-value">${route.icao}</div></div>
+                    <div><div class="route-item-title">Tiempo</div><div class="route-item-value">${route.tiempo}</div></div>
+                    <div><div class="route-item-title">Estacionamiento</div><div class="route-item-value">${route.estacionamiento}</div></div>
+                    <div><div class="route-item-title">Ruta</div><div class="route-item-value" style="font-size: 13px;">${route.ruta}</div></div>
+                    <div>
+                        <button class="btn-edit" onclick="openEditModal(${route.id})">Editar</button>
+                        <button class="btn-delete" onclick="deleteRoute(${route.id})">Eliminar</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function deleteRoute(id) {
+            if (confirm('¿Estás seguro de que deseas eliminar esta ruta?')) {
+                routesData = routesData.filter(route => route.id !== id);
+                localStorage.setItem('binter_routes', JSON.stringify(routesData));
+                renderAdminRoutes();
+            }
+        }
+
+        function openEditModal(id) {
+            const route = routesData.find(r => r.id === id);
+            if (!route) return;
+
+            document.getElementById('edit-id').value = route.id;
+            document.getElementById('edit-vuelo').value = route.vuelo;
+            document.getElementById('edit-icao').value = route.icao;
+            document.getElementById('edit-tiempo').value = route.tiempo;
+            document.getElementById('edit-estacionamiento').value = route.estacionamiento;
+            document.getElementById('edit-ruta').value = route.ruta;
+
+            editSelectedFileData = null;
+            document.getElementById('edit-planVuelo').value = "";
+            editFileNameDisplay.textContent = `Actual: ${route.file.name}`;
+
+            document.getElementById('editModal').classList.add('active');
+        }
+
+        function closeEditModal() {
+            document.getElementById('editModal').classList.remove('active');
+        }
+
+        document.getElementById('editForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const id = Number(document.getElementById('edit-id').value);
+            
+            routesData = routesData.map(route => {
+                if (route.id === id) {
+                    return {
+                        ...route,
+                        vuelo: document.getElementById('edit-vuelo').value,
+                        icao: document.getElementById('edit-icao').value,
+                        tiempo: document.getElementById('edit-tiempo').value,
+                        estacionamiento: document.getElementById('edit-estacionamiento').value,
+                        ruta: document.getElementById('edit-ruta').value,
+                        file: editSelectedFileData ? editSelectedFileData : route.file
+                    };
+                }
+                return route;
+            });
+
+            localStorage.setItem('binter_routes', JSON.stringify(routesData));
+            closeEditModal();
+            renderAdminRoutes();
+        });
     </script>
 </body>
 </html>
