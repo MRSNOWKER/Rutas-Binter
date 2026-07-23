@@ -32,11 +32,10 @@
             flex-direction: column;
         }
 
-        /* BARRA DE NAVEGACIÓN */
+        /* NAVEGACIÓN PRINCIPAL */
         nav {
-            background-color: rgba(0, 0, 0, 0.15);
-            backdrop-filter: blur(8px);
-            padding: 12px 25px;
+            background-color: rgba(0, 0, 0, 0.25);
+            padding: 15px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -70,7 +69,6 @@
             color: #ffffff;
             margin-top: -2px;
             opacity: 0.95;
-            letter-spacing: 0.5px;
         }
 
         .nav-links {
@@ -83,11 +81,11 @@
             background: transparent;
             border: 2px solid #ffffff;
             color: #ffffff;
-            padding: 8px 16px;
+            padding: 8px 18px;
             border-radius: 20px;
             font-weight: 700;
             cursor: pointer;
-            transition: all 0.25s ease;
+            transition: all 0.2s ease;
             font-size: 13px;
         }
 
@@ -96,48 +94,46 @@
             color: var(--binter-green-dark);
         }
 
-        /* VISTAS / PESTAÑAS */
-        .view {
-            display: none;
+        /* CONTENEDOR DE VISTAS */
+        .main-container {
+            flex: 1;
             width: 100%;
             max-width: 950px;
             margin: 0 auto;
             padding: 30px 20px;
-            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .view {
+            display: none;
+            width: 100%;
         }
 
         .view.active {
             display: block;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* PORTADA PRINCIPAL */
+        /* PORTADA */
         #view-home {
             text-align: center;
             color: white;
-            padding-top: 40px;
+            padding-top: 30px;
         }
 
         .hero-logo {
             font-family: 'Montserrat', sans-serif;
             font-style: italic;
             font-weight: 900;
-            font-size: 80px;
+            font-size: 75px;
             color: #ffffff;
             line-height: 0.9;
             margin-bottom: 5px;
-            text-shadow: 2px 4px 8px rgba(0,0,0,0.15);
+            text-shadow: 2px 4px 8px rgba(0,0,0,0.2);
         }
 
         .hero-sub {
             font-style: italic;
             font-size: 20px;
-            margin-bottom: 50px;
-            letter-spacing: 1px;
+            margin-bottom: 40px;
         }
 
         .modo-canario-badge {
@@ -148,37 +144,36 @@
             gap: 12px;
             padding: 12px 28px;
             border-radius: 50px;
-            font-size: 28px;
+            font-size: 26px;
             font-weight: 700;
-            margin-bottom: 50px;
+            margin-bottom: 40px;
             box-shadow: 0 8px 20px rgba(0,0,0,0.15);
         }
 
-        .toggle-icon {
-            width: 42px;
+        .toggle-switch {
+            width: 44px;
             height: 24px;
             background-color: var(--binter-green);
             border-radius: 12px;
-            position: relative;
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            padding: 2px;
         }
 
-        .toggle-icon::after {
-            content: '';
-            position: absolute;
-            top: 2px;
-            left: 2px;
+        .toggle-circle {
             width: 20px;
             height: 20px;
-            background: white;
+            background: #ffffff;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffffff'%3E%3Cpath d='M12 21a1 1 0 0 1-1-1v-8.17a6.98 6.98 0 0 0-4.14-1.28A6.98 6.98 0 0 0 2 12a1 1 0 1 1-1.73-1A8.97 8.97 0 0 1 7 8.05V7a5 5 0 0 1 5-5 5 5 0 0 1 5 5v1.05a8.97 8.97 0 0 1 6.73 2.95 1 1 0 1 1-1.73 1 6.98 6.98 0 0 0-4.86-1.45 6.98 6.98 0 0 0-4.14 1.28V20a1 1 0 0 1-1 1zm-1-14a3 3 0 0 0-3 3v.2a8.96 8.96 0 0 1 3-1.2V7zm2 0v2a8.96 8.96 0 0 1 3 1.2V10a3 3 0 0 0-3-3z'/%3E%3C/svg%3E");
-            background-size: 14px 14px;
-            background-repeat: no-repeat;
-            background-position: center;
+        }
+
+        .toggle-circle svg {
+            width: 13px;
+            height: 13px;
+            fill: #ffffff;
         }
 
         .hero-buttons {
@@ -191,22 +186,21 @@
         .btn-hero {
             background-color: #ffffff;
             color: var(--binter-green-dark);
-            padding: 16px 32px;
+            padding: 15px 30px;
             border-radius: 30px;
-            font-size: 18px;
+            font-size: 17px;
             font-weight: 700;
             border: none;
             cursor: pointer;
             box-shadow: 0 6px 15px rgba(0,0,0,0.15);
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: transform 0.2s;
         }
 
         .btn-hero:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            transform: translateY(-2px);
         }
 
-        /* FORMULARIOS Y TARJETAS */
+        /* TARJETAS Y FORMULARIOS */
         .card {
             background-color: var(--card-bg);
             border-radius: 16px;
@@ -254,27 +248,20 @@
             border-radius: 8px;
             font-size: 15px;
             outline: none;
-            transition: border-color 0.2s;
         }
 
         input[type="text"]:focus, input[type="password"]:focus {
             border-color: var(--binter-green);
         }
 
-        /* Zona de Subida */
         .file-upload-zone {
             border: 2px dashed var(--binter-green);
             background-color: #f1f8f3;
             border-radius: 10px;
             padding: 20px;
             text-align: center;
-            cursor: pointer;
             position: relative;
-            transition: background 0.2s;
-        }
-
-        .file-upload-zone:hover {
-            background-color: #e2f2e5;
+            cursor: pointer;
         }
 
         .file-upload-zone input[type="file"] {
@@ -302,34 +289,33 @@
             border-radius: 8px;
             cursor: pointer;
             margin-top: 25px;
-            transition: background 0.2s;
         }
 
         .btn-submit:hover {
             background-color: var(--binter-green-dark);
         }
 
-        /* TARJETAS DE RUTA */
+        /* LISTA DE RUTAS */
         .routes-list {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 15px;
         }
 
         .route-card {
             background: #ffffff;
             border-radius: 12px;
             padding: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
             gap: 15px;
             align-items: center;
             border-left: 6px solid var(--binter-green);
         }
 
         .route-item-title {
-            font-size: 12px;
+            font-size: 11px;
             color: #78909c;
             text-transform: uppercase;
             font-weight: 700;
@@ -345,20 +331,13 @@
         .btn-download {
             background-color: var(--binter-green);
             color: white;
-            padding: 10px 16px;
+            padding: 9px 14px;
             border-radius: 6px;
             text-decoration: none;
             font-weight: 700;
-            font-size: 13px;
+            font-size: 12px;
             display: inline-block;
             text-align: center;
-            transition: background 0.2s;
-            border: none;
-            cursor: pointer;
-        }
-
-        .btn-download:hover {
-            background-color: var(--binter-green-dark);
         }
 
         .btn-edit {
@@ -367,7 +346,7 @@
             padding: 8px 12px;
             border-radius: 6px;
             font-weight: 700;
-            font-size: 13px;
+            font-size: 12px;
             border: none;
             cursor: pointer;
             width: 100%;
@@ -380,10 +359,44 @@
             padding: 8px 12px;
             border-radius: 6px;
             font-weight: 700;
-            font-size: 13px;
+            font-size: 12px;
             border: none;
             cursor: pointer;
             width: 100%;
         }
 
-        .empty-
+        .empty-routes {
+            text-align: center;
+            padding: 40px;
+            color: #78909c;
+        }
+
+        .admin-login-box {
+            text-align: center;
+            max-width: 380px;
+            margin: 30px auto;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            width: 100%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
