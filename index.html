@@ -364,6 +364,89 @@
             font-size: 13px;
         }
 
+        /* DISEÑO DE LA GRILLA DE PREVISUALIZACIÓN Y BOTÓN MÁS */
+        .photo-upload-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 15px;
+            justify-content: center;
+        }
+
+        .photo-preview-item {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 2px solid var(--binter-green);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+        }
+
+        .photo-preview-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .btn-remove-preview {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            background: rgba(229, 57, 53, 0.9);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 11px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-add-more-box {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            border: 2px dashed var(--binter-green);
+            background-color: #f1f8f3;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-add-more-box:hover {
+            background-color: #e2f2e5;
+        }
+
+        .btn-add-more-box input[type="file"] {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .plus-icon {
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--binter-green-dark);
+            line-height: 1;
+        }
+
+        .btn-add-more-text {
+            font-size: 9px;
+            color: var(--binter-green-dark);
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
         .btn-submit {
             background-color: var(--binter-green);
             color: white;
@@ -527,11 +610,7 @@
             box-shadow: 0 6px 20px rgba(0,0,0,0.15);
             display: flex;
             flex-direction: column;
-            transition: transform 0.2s;
-        }
-
-        .photo-item-card:hover {
-            transform: translateY(-4px);
+            position: relative;
         }
 
         .photo-item-card img {
@@ -560,6 +639,29 @@
             color: var(--binter-green-dark);
             font-weight: 700;
             text-transform: uppercase;
+        }
+
+        .btn-delete-my-photo {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(229, 57, 53, 0.9);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            transition: transform 0.2s;
+        }
+
+        .btn-delete-my-photo:hover {
+            transform: scale(1.1);
         }
 
         /* BOTÓN FLOTANTE CIRCULAR CON CÁMARA */
@@ -682,7 +784,7 @@
         <div class="card">
             <div id="admin-auth" class="admin-login-box">
                 <h2 style="color: var(--binter-green-dark); margin-bottom: 10px;">ACCESO RESTRINGIDO</h2>
-                <p style="color: #666; margin-bottom: 20px;">INTRODUCE EL CÓDIGO DE ADMINISTRADOR PARA GESTIONAR LAS RUTAS.</p>
+                <p style="color: #666; margin-bottom: 20px;">INTRODUCE EL CÓDIGO DE ADMINISTRADOR PARA GESTIONAR LAS RUTAS Y FOTOS.</p>
                 <input type="password" id="adminCodeInput" placeholder="CÓDIGO DE ACCESO">
                 <button class="btn-submit" onclick="checkAdminCode()" style="margin-top:0;">ACCEDER</button>
             </div>
@@ -743,7 +845,10 @@
                 </div>
 
                 <h3 style="color: var(--text-color); margin-bottom: 10px; font-size: 18px;">RUTAS EXISTENTES</h3>
-                <div id="adminRoutesContainer" class="routes-list"></div>
+                <div id="adminRoutesContainer" class="routes-list" style="margin-bottom: 40px;"></div>
+
+                <h3 style="color: var(--text-color); margin-bottom: 10px; font-size: 18px;">GESTIÓN DE FOTOS (ADMIN)</h3>
+                <div id="adminPhotosContainer" class="routes-list"></div>
             </div>
         </div>
     </div>
@@ -797,14 +902,42 @@
         </div>
     </div>
 
-    <div id="photoModal" class="modal">
+    <div id="editPhotoModal" class="modal">
         <div class="modal-content">
-            <h3 style="margin-bottom: 20px; color: var(--binter-green-dark);">SUBIR NUEVAS FOTOS</h3>
-            <form id="photoForm">
+            <h3 style="margin-bottom: 20px; color: var(--binter-green-dark);">EDITAR TEXTOS DE FOTO</h3>
+            <form id="editPhotoForm">
+                <input type="hidden" id="edit-photo-id">
                 <div class="form-grid">
                     <div class="form-group full-width">
+                        <label>NOMBRE DE USUARIO</label>
+                        <input type="text" id="edit-photo-user" required>
+                    </div>
+                    <div class="form-group full-width">
+                        <label>DESCRIPCIÓN</label>
+                        <input type="text" id="edit-photo-description" required>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 10px; margin-top: 20px;">
+                    <button type="submit" class="btn-submit" style="margin-top:0;">GUARDAR CAMBIOS</button>
+                    <button type="button" class="btn-submit" style="margin-top:0; background: #78909c;" onclick="closeEditPhotoModal()">CANCELAR</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="photoModal" class="modal">
+        <div class="modal-content">
+            <h3 style="margin-bottom: 20px; color: var(--binter-green-dark);">SUBIR FOTOS (MÁX. 5)</h3>
+            <form id="photoForm">
+                <div class="form-grid">
+                    <div class="form-group">
                         <label for="photoUser">NOMBRE DE USUARIO</label>
                         <input type="text" id="photoUser" placeholder="EJ: PILOTO_TF" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="photoPin">PIN SECRETO (PARA BORRARLA)</label>
+                        <input type="password" id="photoPin" placeholder="EJ: 1234" required>
                     </div>
 
                     <div class="form-group full-width">
@@ -813,17 +946,19 @@
                     </div>
 
                     <div class="form-group full-width">
-                        <label>SELECCIONAR FOTOS (VARIAS)</label>
-                        <div class="file-upload-zone">
-                            <span style="font-size: 30px;">📷</span>
-                            <p style="margin-top:5px; color: #555;">HAZ CLIC O ARRASTRA TUS FOTOS AQUÍ</p>
-                            <input type="file" id="photoFiles" multiple accept="image/*" required>
-                            <div class="file-name" id="photoFilesNameDisplay">NINGUNA FOTO SELECCIONADA</div>
+                        <label>SELECCIONAR FOTOS</label>
+                        <div id="photoUploadGrid" class="photo-upload-grid">
+                            <div class="btn-add-more-box" id="addMoreBox">
+                                <span class="plus-icon">+</span>
+                                <span class="btn-add-more-text">AÑADIR</span>
+                                <input type="file" id="photoFiles" multiple accept="image/*">
+                            </div>
                         </div>
+                        <div class="file-name" id="photoCounterDisplay" style="text-align:center; margin-top:10px;">0 / 5 FOTOS SELECCIONADAS</div>
                     </div>
                 </div>
                 <div style="display: flex; gap: 10px; margin-top: 20px;">
-                    <button type="submit" class="btn-submit" style="margin-top:0;">SUBIR</button>
+                    <button type="submit" class="btn-submit" style="margin-top:0;">SUBIR FOTOS</button>
                     <button type="button" class="btn-submit" style="margin-top:0; background: #78909c;" onclick="closePhotoModal()">CANCELAR</button>
                 </div>
             </form>
@@ -849,7 +984,10 @@
 
             if (tabName === 'routes') renderRoutes();
             if (tabName === 'photos') renderPhotos();
-            if (tabName === 'admin' && isAdminLoggedIn) renderAdminRoutes();
+            if (tabName === 'admin' && isAdminLoggedIn) {
+                renderAdminRoutes();
+                renderAdminPhotos();
+            }
         }
 
         function searchRoutes() {
@@ -880,6 +1018,7 @@
                 document.getElementById('admin-panel').style.display = 'block';
                 document.getElementById('adminCodeInput').value = '';
                 renderAdminRoutes();
+                renderAdminPhotos();
             } else {
                 alert('CÓDIGO INCORRECTO. INTÉNTALO DE NUEVO.');
             }
@@ -891,7 +1030,7 @@
             document.getElementById('admin-panel').style.display = 'none';
         }
 
-        /* MANEJO DE PLANES DE VUELO */
+        /* PLANES DE VUELO */
         const fileInput = document.getElementById('planVuelo');
         const fileNameDisplay = document.getElementById('fileNameDisplay');
         let selectedFileData = null;
@@ -964,33 +1103,72 @@
             alert("¡RUTA AÑADIDA CON ÉXITO!");
         });
 
-        /* MANEJO DE FOTOS Y COLLAGE */
-        const photoFilesInput = document.getElementById('photoFiles');
-        const photoFilesNameDisplay = document.getElementById('photoFilesNameDisplay');
+        /* GESTIÓN DE FOTOS MULTIPLES CON BOTÓN MÁS Y MÁXIMO 5 */
         let selectedPhotosArray = [];
 
-        photoFilesInput.addEventListener('change', function(e) {
+        document.getElementById('photoFiles').addEventListener('change', function(e) {
             const files = e.target.files;
-            if (files && files.length > 0) {
-                photoFilesNameDisplay.textContent = `${files.length} FOTO(S) SELECCIONADA(S)`;
-                selectedPhotosArray = [];
+            if (!files || files.length === 0) return;
 
-                for (let i = 0; i < files.length; i++) {
-                    const file = files[i];
-                    const reader = new FileReader();
-                    reader.onload = function(event) {
-                        selectedPhotosArray.push({
-                            name: file.name,
-                            content: event.target.result
-                        });
-                    };
-                    reader.readAsDataURL(file);
-                }
-            } else {
-                photoFilesNameDisplay.textContent = "NINGUNA FOTO SELECCIONADA";
-                selectedPhotosArray = [];
+            const remainingSlots = 5 - selectedPhotosArray.length;
+            if (remainingSlots <= 0) {
+                alert("YA HAS ALCANZADO EL LÍMITE MÁXIMO DE 5 FOTOS.");
+                this.value = "";
+                return;
             }
+
+            const filesToProcess = Array.from(files).slice(0, remainingSlots);
+
+            filesToProcess.forEach(file => {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    selectedPhotosArray.push({
+                        id: Date.now() + Math.random(),
+                        name: file.name,
+                        content: event.target.result
+                    });
+                    updatePhotoPreviewUI();
+                };
+                reader.readAsDataURL(file);
+            });
+
+            this.value = ""; // Limpiar input para permitir seleccionar la misma foto si se desea
         });
+
+        function removeSelectedPhoto(id) {
+            selectedPhotosArray = selectedPhotosArray.filter(p => p.id !== id);
+            updatePhotoPreviewUI();
+        }
+
+        function updatePhotoPreviewUI() {
+            const grid = document.getElementById('photoUploadGrid');
+            const counterDisplay = document.getElementById('photoCounterDisplay');
+            const addMoreBox = document.getElementById('addMoreBox');
+
+            // Eliminar todas las miniaturas existentes manteniendo el contenedor "+"
+            const existingThumbs = grid.querySelectorAll('.photo-preview-item');
+            existingThumbs.forEach(el => el.remove());
+
+            // Añadir miniaturas antes de la caja del botón "+"
+            selectedPhotosArray.forEach(photo => {
+                const thumbDiv = document.createElement('div');
+                thumbDiv.className = 'photo-preview-item';
+                thumbDiv.innerHTML = `
+                    <img src="${photo.content}" alt="Miniatura">
+                    <button type="button" class="btn-remove-preview" onclick="removeSelectedPhoto(${photo.id})">✕</button>
+                `;
+                grid.insertBefore(thumbDiv, addMoreBox);
+            });
+
+            counterDisplay.textContent = `${selectedPhotosArray.length} / 5 FOTOS SELECCIONADAS`;
+
+            // Ocultar o mostrar el botón "+" si se llega al límite de 5
+            if (selectedPhotosArray.length >= 5) {
+                addMoreBox.style.display = 'none';
+            } else {
+                addMoreBox.style.display = 'flex';
+            }
+        }
 
         function openPhotoModal() {
             document.getElementById('photoModal').classList.add('active');
@@ -999,8 +1177,8 @@
         function closePhotoModal() {
             document.getElementById('photoModal').classList.remove('active');
             document.getElementById('photoForm').reset();
-            photoFilesNameDisplay.textContent = "NINGUNA FOTO SELECCIONADA";
             selectedPhotosArray = [];
+            updatePhotoPreviewUI();
         }
 
         document.getElementById('photoForm').addEventListener('submit', function(e) {
@@ -1011,13 +1189,14 @@
             }
 
             const username = document.getElementById('photoUser').value.toUpperCase();
+            const pin = document.getElementById('photoPin').value;
             const description = document.getElementById('photoDescription').value;
 
-            // Guardar cada foto seleccionada como un elemento individual en el collage
             selectedPhotosArray.forEach(photoObj => {
                 const newPhotoEntry = {
-                    id: Date.now() + Math.random(),
+                    id: photoObj.id,
                     user: username,
+                    pin: pin,
                     description: description,
                     image: photoObj.content
                 };
@@ -1039,6 +1218,7 @@
 
             container.innerHTML = photosData.map(photo => `
                 <div class="photo-item-card">
+                    <button class="btn-delete-my-photo" onclick="tryDeletePhoto(${photo.id})" title="Eliminar foto">×</button>
                     <img src="${photo.image}" alt="Foto de usuario">
                     <div class="photo-card-body">
                         <div class="photo-description">${photo.description}</div>
@@ -1047,6 +1227,89 @@
                 </div>
             `).join('');
         }
+
+        function tryDeletePhoto(id) {
+            const photo = photosData.find(p => p.id === id);
+            if (!photo) return;
+
+            const inputPin = prompt(`INTRODUCE EL PIN SECRETO ESTABLECIDO AL SUBIR LA FOTO DE @${photo.user} PARA BORRARLA:`);
+            if (inputPin === null) return;
+
+            if (inputPin === photo.pin) {
+                photosData = photosData.filter(p => p.id !== id);
+                localStorage.setItem('binter_photos', JSON.stringify(photosData));
+                renderPhotos();
+                alert("FOTO ELIMINADA CORRECTAMENTE.");
+            } else {
+                alert("PIN INCORRECTO. NO PUEDES BORRAR ESTA FOTO.");
+            }
+        }
+
+        function renderAdminPhotos() {
+            const container = document.getElementById('adminPhotosContainer');
+            if (photosData.length === 0) {
+                container.innerHTML = `<div class="empty-routes">NO HAY FOTOS PARA ADMINISTRAR.</div>`;
+                return;
+            }
+
+            container.innerHTML = photosData.map(photo => `
+                <div class="route-card" style="border-left-color: var(--warning-color);">
+                    <div><div class="route-item-title">USUARIO</div><div class="route-item-value">@${photo.user}</div></div>
+                    <div><div class="route-item-title">DESCRIPCIÓN</div><div class="route-item-value" style="font-size: 13px;">${photo.description}</div></div>
+                    <div><div class="route-item-title">FOTO</div><img src="${photo.image}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 6px;"></div>
+                    <div>
+                        <button class="btn-edit" onclick="openEditPhotoModal(${photo.id})">EDITAR</button>
+                        <button class="btn-delete" onclick="adminDeletePhoto(${photo.id})">ELIMINAR</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function adminDeletePhoto(id) {
+            if (confirm('¿ESTÁS SEGURO DE QUE DESEAS ELIMINAR ESTA FOTO COMO ADMINISTRADOR?')) {
+                photosData = photosData.filter(p => p.id !== id);
+                localStorage.setItem('binter_photos', JSON.stringify(photosData));
+                renderAdminPhotos();
+                renderPhotos();
+            }
+        }
+
+        function openEditPhotoModal(id) {
+            const photo = photosData.find(p => p.id === id);
+            if (!photo) return;
+
+            document.getElementById('edit-photo-id').value = photo.id;
+            document.getElementById('edit-photo-user').value = photo.user;
+            document.getElementById('edit-photo-description').value = photo.description;
+
+            document.getElementById('editPhotoModal').classList.add('active');
+        }
+
+        function closeEditPhotoModal() {
+            document.getElementById('editPhotoModal').classList.remove('active');
+        }
+
+        document.getElementById('editPhotoForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const id = Number(document.getElementById('edit-photo-id').value);
+
+            photosData = photosData.map(photo => {
+                if (photo.id === id) {
+                    return {
+                        ...photo,
+                        user: document.getElementById('edit-photo-user').value.toUpperCase(),
+                        description: document.getElementById('edit-photo-description').value
+                    };
+                }
+                return photo;
+            });
+
+            localStorage.setItem('binter_photos', JSON.stringify(photosData));
+            closeEditPhotoModal();
+            renderAdminPhotos();
+            renderPhotos();
+            alert("¡FOTO ACTUALIZADA CON ÉXITO!");
+        });
 
         function renderRoutes() {
             const container = document.getElementById('routesContainer');
