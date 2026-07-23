@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Binter Canarias - Gestión de Rutas</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,800;1,900&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --binter-green: #40af35;
@@ -53,24 +53,19 @@
             line-height: 1;
         }
 
-        .brand-logo .binter-text {
-            font-family: 'Montserrat', sans-serif;
-            font-style: italic;
-            font-weight: 900;
-            font-size: 34px;
-            color: #ffffff;
-            letter-spacing: -1px;
-            text-shadow: 1px 2px 4px rgba(0,0,0,0.2);
+        .brand-logo img {
+            height: 38px;
+            width: auto;
+            display: block;
         }
 
         .brand-logo .binter-sub {
-            font-family: 'Open Sans', sans-serif;
-            font-style: italic;
             font-size: 11px;
             color: #ffffff;
-            margin-top: -2px;
+            margin-top: 3px;
             opacity: 0.95;
             letter-spacing: 0.5px;
+            font-style: italic;
         }
 
         .nav-links {
@@ -119,24 +114,22 @@
         #view-home {
             text-align: center;
             color: white;
-            padding-top: 40px;
+            padding-top: 30px;
         }
 
-        .hero-logo {
-            font-family: 'Montserrat', sans-serif;
-            font-style: italic;
-            font-weight: 900;
-            font-size: 80px;
-            color: #ffffff;
-            line-height: 0.9;
-            margin-bottom: 5px;
-            text-shadow: 2px 4px 8px rgba(0,0,0,0.15);
+        .hero-logo-img {
+            max-width: 380px;
+            width: 85%;
+            height: auto;
+            margin: 0 auto 5px auto;
+            display: block;
+            filter: drop-shadow(2px 4px 8px rgba(0,0,0,0.15));
         }
 
         .hero-sub {
             font-style: italic;
             font-size: 20px;
-            margin-bottom: 50px;
+            margin-bottom: 45px;
             letter-spacing: 1px;
         }
 
@@ -258,7 +251,7 @@
             border-color: var(--binter-green);
         }
 
-        /* Upload Area */
+        /* Carga de archivos */
         .file-upload-zone {
             border: 2px dashed var(--binter-green);
             background-color: #f1f8f3;
@@ -305,7 +298,7 @@
             background-color: var(--binter-green-dark);
         }
 
-        /* PESTAÑA RUTAS Y ADMIN */
+        /* TARJETAS DE RUTAS */
         .routes-list {
             display: flex;
             flex-direction: column;
@@ -389,7 +382,7 @@
             font-size: 16px;
         }
 
-        /* LOCK SCREEN / LOGIN ADMIN */
+        /* LOGIN ADMIN */
         .admin-login-box {
             text-align: center;
             max-width: 400px;
@@ -434,7 +427,7 @@
 
     <nav>
         <a class="brand-logo" onclick="switchTab('home')">
-            <span class="binter-text">Binter</span>
+            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 450 120'><path fill='%23ffffff' d='M0 110 L50 0 H120 C140 0 155 8 150 25 C147 35 137 45 120 48 C140 52 145 65 140 82 C135 100 115 110 90 110 Z M52 48 H80 C95 48 102 40 105 28 C108 18 100 12 88 12 H62 Z M42 96 H75 C90 96 98 88 102 74 C105 62 98 56 82 56 H50 Z M150 110 L170 30 H205 L185 110 Z M175 18 C172 6 182 0 192 0 C202 0 208 6 205 18 C202 28 192 34 182 34 C172 34 168 28 175 18 Z M200 110 L220 30 H250 L245 42 C255 32 270 28 285 28 C310 28 318 42 312 65 L300 110 H268 L278 68 C282 55 278 48 265 48 C250 48 240 60 235 78 L228 110 Z M335 110 L345 62 H325 L328 42 H348 L353 22 L385 15 L380 42 H405 L400 62 H375 L368 110 Z M405 75 C400 98 418 112 442 112 C458 112 472 105 480 95 L460 80 C452 88 445 92 436 92 C426 92 420 86 422 75 H485 C488 52 475 28 445 28 C418 28 408 50 405 75 Z M425 60 C428 48 438 42 448 42 C458 42 462 48 460 60 Z M480 110 L500 30 H530 L525 46 C532 35 545 28 560 28 C568 28 575 30 578 34 L565 62 C558 58 552 56 545 56 C532 56 522 68 518 85 L512 110 Z'/></svg>" alt="Binter Logo">
             <span class="binter-sub">Líneas aéreas de Canarias</span>
         </a>
         <div class="nav-links">
@@ -446,7 +439,7 @@
     </nav>
 
     <div id="view-home" class="view active">
-        <div class="hero-logo">Binter</div>
+        <img class="hero-logo-img" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 580 120'><path fill='%23ffffff' d='M0 110 L50 0 H120 C140 0 155 8 150 25 C147 35 137 45 120 48 C140 52 145 65 140 82 C135 100 115 110 90 110 Z M52 48 H80 C95 48 102 40 105 28 C108 18 100 12 88 12 H62 Z M42 96 H75 C90 96 98 88 102 74 C105 62 98 56 82 56 H50 Z M150 110 L170 30 H205 L185 110 Z M175 18 C172 6 182 0 192 0 C202 0 208 6 205 18 C202 28 192 34 182 34 C172 34 168 28 175 18 Z M200 110 L220 30 H250 L245 42 C255 32 270 28 285 28 C310 28 318 42 312 65 L300 110 H268 L278 68 C282 55 278 48 265 48 C250 48 240 60 235 78 L228 110 Z M335 110 L345 62 H325 L328 42 H348 L353 22 L385 15 L380 42 H405 L400 62 H375 L368 110 Z M405 75 C400 98 418 112 442 112 C458 112 472 105 480 95 L460 80 C452 88 445 92 436 92 C426 92 420 86 422 75 H485 C488 52 475 28 445 28 C418 28 408 50 405 75 Z M425 60 C428 48 438 42 448 42 C458 42 462 48 460 60 Z M480 110 L500 30 H530 L525 46 C532 35 545 28 560 28 C568 28 575 30 578 34 L565 62 C558 58 552 56 545 56 C532 56 522 68 518 85 L512 110 Z'/></svg>" alt="Binter Logo">
         <div class="hero-sub">Líneas aéreas de Canarias</div>
         
         <div>
@@ -570,14 +563,11 @@
     </div>
 
     <script>
-        // CÓDIGO DE ACCESO ADMINISTRADOR
         const ADMIN_CODE = "1989";
         let isAdminLoggedIn = false;
 
-        // Almacenamiento local de rutas
         let routesData = JSON.parse(localStorage.getItem('binter_routes')) || [];
 
-        // Cambiar pestañas
         function switchTab(tabName) {
             document.querySelectorAll('.view').forEach(view => view.classList.remove('active'));
             document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
@@ -591,7 +581,6 @@
             if (tabName === 'admin' && isAdminLoggedIn) renderAdminRoutes();
         }
 
-        // VALIDACIÓN CÓDIGO ADMIN
         function checkAdminCode() {
             const input = document.getElementById('adminCodeInput').value;
             if (input === ADMIN_CODE) {
@@ -611,7 +600,6 @@
             document.getElementById('admin-panel').style.display = 'none';
         }
 
-        // Subida de archivos (Base64)
         const fileInput = document.getElementById('planVuelo');
         const fileNameDisplay = document.getElementById('fileNameDisplay');
         let selectedFileData = null;
@@ -634,7 +622,6 @@
             }
         });
 
-        // Guardar Nueva Ruta
         document.getElementById('routeForm').addEventListener('submit', function(e) {
             e.preventDefault();
             if (!selectedFileData) {
@@ -661,7 +648,6 @@
             switchTab('routes');
         });
 
-        // Renderizar Rutas (Vista Normal)
         function renderRoutes() {
             const container = document.getElementById('routesContainer');
             if (routesData.length === 0) {
@@ -684,7 +670,6 @@
             `).join('');
         }
 
-        // Renderizar Rutas (Panel Administrador)
         function renderAdminRoutes() {
             const container = document.getElementById('adminRoutesContainer');
             if (routesData.length === 0) {
@@ -707,7 +692,6 @@
             `).join('');
         }
 
-        // ELIMINAR RUTA
         function deleteRoute(id) {
             if (confirm('¿Estás seguro de que deseas eliminar esta ruta?')) {
                 routesData = routesData.filter(route => route.id !== id);
@@ -716,7 +700,6 @@
             }
         }
 
-        // EDITAR RUTA (MODAL)
         function openEditModal(id) {
             const route = routesData.find(r => r.id === id);
             if (!route) return;
@@ -735,7 +718,6 @@
             document.getElementById('editModal').classList.remove('active');
         }
 
-        // GUARDAR CAMBIOS DE EDICIÓN
         document.getElementById('editForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const id = Number(document.getElementById('edit-id').value);
