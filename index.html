@@ -1084,9 +1084,9 @@
                     </div>
 
                     <div class="form-group full-width">
-                        <label>SELECCIONAR FOTOS</label>
+                        <label>SELECCIONAR O PEGAR FOTOS</label>
                         <div id="photoUploadGrid" class="photo-upload-grid">
-                            <div class="btn-add-more-box" id="addMoreBox">
+                            <div class="btn-add-more-box" id="addMoreBox" title="Haz clic o pega aquí tus imágenes (Ctrl+V)">
                                 <span class="plus-icon">+</span>
                                 <span class="btn-add-more-text">AÑADIR</span>
                                 <input type="file" id="photoFiles" multiple accept="image/*">
@@ -1260,7 +1260,7 @@
             mostrarAviso("¡Ruta añadida con éxito!");
         });
 
-        /* GESTIÓN DE FOTOS MÚLTIPLES (OPTIMIZACIÓN Y SIN LÍMITE DE PESO) */
+        /* GESTIÓN DE FOTOS MÚLTIPLES (OPTIMIZACIÓN, SIN LÍMITE DE PESO Y SOPORTE DE PEGADO) */
         let selectedPhotosArray = [];
 
         function resizeImageToDataURL(file, maxWidth = 1600, maxHeight = 1600, quality = 0.85) {
@@ -1290,7 +1290,6 @@
                         const ctx = canvas.getContext('2d');
                         ctx.drawImage(img, 0, 0, width, height);
 
-                        // Comprime y escala automáticamente para evitar errores de almacenamiento por tamaño
                         const dataUrl = canvas.toDataURL('image/jpeg', quality);
                         resolve(dataUrl);
                     };
@@ -1304,35 +1303,67 @@
             });
         }
 
+        async function processAndAddPhotoFile(file) {
+            if (selectedPhotosArray.length >= 5) {
+                mostrarAviso("Ya has alcanzado el límite máximo de 5 fotos.");
+                return;
+            }
+
+            try {
+                const optimizedDataUrl = await resizeImageToDataURL(file);
+                selectedPhotosArray.push({
+                    id: Date.now() + Math.random(),
+                    content: optimizedDataUrl
+                });
+                updatePhotoPreviewUI();
+            } catch (err) {
+                console.error("Error al procesar la imagen:", err);
+                mostrarAviso("Hubo un error al procesar la foto.");
+            }
+        }
+
         document.getElementById('photoFiles').addEventListener('change', async function(e) {
             const files = e.target.files;
             if (!files || files.length === 0) return;
 
             const remainingSlots = 5 - selectedPhotosArray.length;
-            if (remainingSlots <= 0) {
-                mostrarAviso("Ya has alcanzado el límite máximo de 5 fotos.");
-                this.value = "";
-                return;
-            }
-
             const filesToProcess = Array.from(files).slice(0, remainingSlots);
 
             for (const file of filesToProcess) {
-                try {
-                    // Procesa cualquier foto sin importar su peso inicial
-                    const optimizedDataUrl = await resizeImageToDataURL(file);
-                    selectedPhotosArray.push({
-                        id: Date.now() + Math.random(),
-                        content: optimizedDataUrl
-                    });
-                    updatePhotoPreviewUI();
-                } catch (err) {
-                    console.error("Error al procesar la imagen:", err);
-                    mostrarAviso("Hubo un error al procesar una de las fotos.");
-                }
+                await processAndAddPhotoFile(file);
             }
 
             this.value = "";
+        });
+
+        // Evento global de pegado (Ctrl+V) cuando el modal de fotos está activo
+        document.addEventListener('paste', async function(e) {
+            const photoModal = document.getElementById('photoModal');
+            if (!photoModal.classList.contains('active')) return;
+
+            const items = e.clipboardData || e.originalEvent.clipboardData;
+            if (!items || !items.items) return;
+
+            let pastedCount = 0;
+            for (const item of items.items) {
+                if (item.type.indexOf('image') !== -1) {
+                    const blob = item.getAsFile();
+                    if (blob) {
+                        e.preventDefault();
+                        if (selectedPhotosArray.length < 5) {
+                            await processAndAddPhotoFile(blob);
+                            pastedCount++;
+                        } else {
+                            mostrarAviso("Límite de 5 fotos alcanzado.");
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (pastedCount > 0) {
+                mostrarAviso(`¡Imagen pegada correctamente! (${pastedCount})`);
+            }
         });
 
         function removeSelectedPhoto(id) {
@@ -1381,7 +1412,7 @@
         document.getElementById('photoForm').addEventListener('submit', function(e) {
             e.preventDefault();
             if (selectedPhotosArray.length === 0) {
-                mostrarAviso("Por favor, selecciona al menos una foto.");
+                mostrarAviso("Por favor, selecciona o pega al menos una foto.");
                 return;
             }
 
@@ -1404,7 +1435,7 @@
             } catch (storageErr) {
                 console.error(storageErr);
                 mostrarAviso("Almacenamiento lleno. Borra algunas publicaciones antiguas.");
-                photoGroupsData.shift(); // Revertir
+                photoGroupsData.shift(); 
                 return;
             }
 
