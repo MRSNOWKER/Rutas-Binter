@@ -33,7 +33,7 @@
 
         /* BARRA DE NAVEGACIÓN */
         nav {
-            background-color: rgba(0, 0, 0, 0.25);
+            background-color: rgba(0, 0, 0, 0.35);
             backdrop-filter: blur(8px);
             padding: 12px 25px;
             display: flex;
@@ -81,7 +81,15 @@
             color: var(--binter-green-dark);
         }
 
-        /* VISTAS / PESTAÑAS */
+        /* CONTENEDOR PRINCIPAL */
+        .main-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* VISTAS / PESTAÑAS GENERALES */
         .view {
             display: none;
             width: 100%;
@@ -89,6 +97,8 @@
             margin: 0 auto;
             padding: 30px 20px;
             animation: fadeIn 0.3s ease-in-out;
+            position: relative;
+            z-index: 2;
         }
 
         .view.active {
@@ -100,19 +110,27 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* PORTADA PRINCIPAL CON FONDO DE AERONAVES */
+        /* PORTADA PRINCIPAL CON FONDO DE AERONAVES (OCUPA TODA LA PANTALLA) */
         #view-home {
-            position: relative;
-            max-width: 100% !important;
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             min-height: calc(100vh - 65px);
-            display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
             color: white;
             padding: 40px 20px;
-            background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.55)), url('image_20e708.jpg') no-repeat center center/cover;
+            z-index: 1;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.5)), url('image_20e708.jpg') no-repeat center center/cover;
+        }
+
+        #view-home.active {
+            display: flex;
         }
 
         .hero-logo-wrapper {
@@ -428,103 +446,105 @@
         </div>
     </nav>
 
-    <div id="view-home" class="view active">
-        <div class="hero-logo-wrapper">
-            <img src="logo-binter.png" alt="Binter Canarias" class="img-logo-hero" onerror="this.onerror=null; this.outerHTML='<h1 style=\'font-family:Montserrat; font-style:italic; font-size:65px; color:#fff; text-shadow:2px 4px 8px rgba(0,0,0,0.3);\'>Binter</h1><p style=\'font-style:italic; font-size:18px;\'>Líneas aéreas de Canarias</p>';">
-        </div>
-        
-        <div>
-            <div class="modo-canario-badge">
-                <div class="palmera-icon-wrapper">
-                    <img src="palmera.png" alt="Palmera" class="img-palmera" onerror="this.onerror=null; this.parentNode.innerHTML='🌴';">
+    <div class="main-container">
+        <div id="view-home" class="view active">
+            <div class="hero-logo-wrapper">
+                <img src="logo-binter.png" alt="Binter Canarias" class="img-logo-hero" onerror="this.onerror=null; this.outerHTML='<h1 style=\'font-family:Montserrat; font-style:italic; font-size:65px; color:#fff; text-shadow:2px 4px 8px rgba(0,0,0,0.3);\'>Binter</h1><p style=\'font-style:italic; font-size:18px;\'>Líneas aéreas de Canarias</p>';">
+            </div>
+            
+            <div>
+                <div class="modo-canario-badge">
+                    <div class="palmera-icon-wrapper">
+                        <img src="palmera.png" alt="Palmera" class="img-palmera" onerror="this.onerror=null; this.parentNode.innerHTML='🌴';">
+                    </div>
+                    <span>Vuela en #ModoCanario</span>
                 </div>
-                <span>Vuela en #ModoCanario</span>
+            </div>
+
+            <div class="hero-buttons">
+                <button class="btn-hero" onclick="switchTab('upload')">Subir tu ruta</button>
+                <button class="btn-hero" onclick="switchTab('routes')">Ver todas las rutas</button>
             </div>
         </div>
 
-        <div class="hero-buttons">
-            <button class="btn-hero" onclick="switchTab('upload')">Subir tu ruta</button>
-            <button class="btn-hero" onclick="switchTab('routes')">Ver todas las rutas</button>
-        </div>
-    </div>
+        <div id="view-upload" class="view">
+            <div class="card">
+                <h2 class="card-title">Subir Nueva Ruta</h2>
+                <form id="routeForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="vuelo">Nº Vuelo</label>
+                            <input type="text" id="vuelo" placeholder="Ej: NT 221" required>
+                        </div>
 
-    <div id="view-upload" class="view">
-        <div class="card">
-            <h2 class="card-title">Subir Nueva Ruta</h2>
-            <form id="routeForm">
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label for="vuelo">Nº Vuelo</label>
-                        <input type="text" id="vuelo" placeholder="Ej: NT 221" required>
-                    </div>
+                        <div class="form-group">
+                            <label for="aeronave">Aeronave</label>
+                            <select id="aeronave" required>
+                                <option value="" disabled selected>Selecciona aeronave</option>
+                                <option value="ATR 72-600">ATR 72-600</option>
+                                <option value="Embraer E195-E2">Embraer E195-E2</option>
+                            </select>
+                        </div>
 
-                    <div class="form-group">
-                        <label for="aeronave">Aeronave</label>
-                        <select id="aeronave" required>
-                            <option value="" disabled selected>Selecciona aeronave</option>
-                            <option value="ATR 72-600">ATR 72-600</option>
-                            <option value="Embraer E195-E2">Embraer E195-E2</option>
-                        </select>
-                    </div>
+                        <div class="form-group">
+                            <label for="icao">ICAO (Origen - Destino)</label>
+                            <input type="text" id="icao" placeholder="Ej: GCXO - GCLP" required>
+                        </div>
 
-                    <div class="form-group">
-                        <label for="icao">ICAO (Origen - Destino)</label>
-                        <input type="text" id="icao" placeholder="Ej: GCXO - GCLP" required>
-                    </div>
+                        <div class="form-group">
+                            <label for="tiempo">Tiempo de Vuelo</label>
+                            <input type="text" id="tiempo" placeholder="Ej: 00h 35m" required>
+                        </div>
 
-                    <div class="form-group">
-                        <label for="tiempo">Tiempo de Vuelo</label>
-                        <input type="text" id="tiempo" placeholder="Ej: 00h 35m" required>
-                    </div>
+                        <div class="form-group">
+                            <label for="estacionamiento">Estacionamiento</label>
+                            <input type="text" id="estacionamiento" placeholder="Ej: Stand 12" required>
+                        </div>
 
-                    <div class="form-group">
-                        <label for="estacionamiento">Estacionamiento</label>
-                        <input type="text" id="estacionamiento" placeholder="Ej: Stand 12" required>
-                    </div>
+                        <div class="form-group full-width">
+                            <label for="ruta">Ruta</label>
+                            <input type="text" id="ruta" placeholder="Ej: LERAM W110 SIMUR" required>
+                        </div>
 
-                    <div class="form-group full-width">
-                        <label for="ruta">Ruta</label>
-                        <input type="text" id="ruta" placeholder="Ej: LERAM W110 SIMUR" required>
-                    </div>
-
-                    <div class="form-group full-width">
-                        <label>Plan de Vuelo</label>
-                        <div class="file-upload-zone">
-                            <span style="font-size: 30px;">📄</span>
-                            <p style="margin-top:5px; color: #555;">Haz clic o arrastra aquí tu Plan de Vuelo</p>
-                            <input type="file" id="planVuelo" required>
-                            <div class="file-name" id="fileNameDisplay">Ningún archivo seleccionado</div>
+                        <div class="form-group full-width">
+                            <label>Plan de Vuelo</label>
+                            <div class="file-upload-zone">
+                                <span style="font-size: 30px;">📄</span>
+                                <p style="margin-top:5px; color: #555;">Haz clic o arrastra aquí tu Plan de Vuelo</p>
+                                <input type="file" id="planVuelo" required>
+                                <div class="file-name" id="fileNameDisplay">Ningún archivo seleccionado</div>
+                            </div>
                         </div>
                     </div>
+
+                    <button type="submit" class="btn-submit">Guardar Ruta</button>
+                </form>
+            </div>
+        </div>
+
+        <div id="view-routes" class="view">
+            <div class="card">
+                <h2 class="card-title">Rutas Guardadas</h2>
+                <div id="routesContainer" class="routes-list"></div>
+            </div>
+        </div>
+
+        <div id="view-admin" class="view">
+            <div class="card">
+                <div id="admin-auth" class="admin-login-box">
+                    <h2 style="color: var(--binter-green-dark); margin-bottom: 10px;">Acceso Restringido</h2>
+                    <p style="color: #666; margin-bottom: 20px;">Introduce el código de administrador para gestionar las rutas.</p>
+                    <input type="password" id="adminCodeInput" placeholder="Código de acceso">
+                    <button class="btn-submit" onclick="checkAdminCode()" style="margin-top:0;">Acceder</button>
                 </div>
 
-                <button type="submit" class="btn-submit">Guardar Ruta</button>
-            </form>
-        </div>
-    </div>
-
-    <div id="view-routes" class="view">
-        <div class="card">
-            <h2 class="card-title">Rutas Guardadas</h2>
-            <div id="routesContainer" class="routes-list"></div>
-        </div>
-    </div>
-
-    <div id="view-admin" class="view">
-        <div class="card">
-            <div id="admin-auth" class="admin-login-box">
-                <h2 style="color: var(--binter-green-dark); margin-bottom: 10px;">Acceso Restringido</h2>
-                <p style="color: #666; margin-bottom: 20px;">Introduce el código de administrador para gestionar las rutas.</p>
-                <input type="password" id="adminCodeInput" placeholder="Código de acceso">
-                <button class="btn-submit" onclick="checkAdminCode()" style="margin-top:0;">Acceder</button>
-            </div>
-
-            <div id="admin-panel" style="display: none;">
-                <h2 class="card-title">
-                    <span>Panel de Administración</span>
-                    <button onclick="logoutAdmin()" style="font-size: 12px; padding: 5px 10px; background: #666; color: white; border: none; border-radius: 4px; cursor: pointer;">Cerrar Sesión</button>
-                </h2>
-                <div id="adminRoutesContainer" class="routes-list"></div>
+                <div id="admin-panel" style="display: none;">
+                    <h2 class="card-title">
+                        <span>Panel de Administración</span>
+                        <button onclick="logoutAdmin()" style="font-size: 12px; padding: 5px 10px; background: #666; color: white; border: none; border-radius: 4px; cursor: pointer;">Cerrar Sesión</button>
+                    </h2>
+                    <div id="adminRoutesContainer" class="routes-list"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -776,7 +796,7 @@
                         ...route,
                         vuelo: document.getElementById('edit-vuelo').value,
                         aeronave: document.getElementById('edit-aeronave').value,
-                        icao: document.getElementById('edit-icao'].value,
+                        icao: document.getElementById('edit-icao').value,
                         tiempo: document.getElementById('edit-tiempo').value,
                         estacionamiento: document.getElementById('edit-estacionamiento').value,
                         ruta: document.getElementById('edit-ruta').value,
