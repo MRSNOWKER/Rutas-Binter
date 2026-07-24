@@ -64,7 +64,10 @@
 
         .nav-links {
             display: flex;
-            gap: 10px;
+            /* Modificación para asegurar un espacio uniforme y simétrico */
+            justify-content: center;
+            align-items: center;
+            gap: 20px; 
             flex-wrap: wrap;
         }
 
@@ -199,6 +202,7 @@
 
         .search-grid {
             display: grid;
+            /* Modificación para repartir el espacio equitativamente desde el centro hacia los lados en el buscador */
             grid-template-columns: 1fr 1fr auto;
             gap: 20px;
             align-items: end;
@@ -301,8 +305,10 @@
 
         .form-grid {
             display: grid;
+            /* Modificación para distribuir los elementos de los formularios simétricamente */
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 20px;
+            justify-content: center;
         }
 
         .form-group {
@@ -476,11 +482,13 @@
             border-radius: 12px;
             padding: 20px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            /* Modificación para distribuir simétricamente las columnas internas de cada tarjeta de ruta */
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            justify-content: space-between;
             align-items: center;
             border-left: 6px solid var(--binter-green);
+            gap: 15px;
         }
 
         .route-item-title {
@@ -509,6 +517,7 @@
         .route-buttons-row {
             display: flex;
             gap: 10px;
+            justify-content: center;
         }
 
         .btn-download {
@@ -637,6 +646,7 @@
             grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
             gap: 20px;
             margin-top: 20px;
+            justify-content: center;
         }
 
         .photo-item-card {
@@ -1072,7 +1082,6 @@
         let routesData = JSON.parse(localStorage.getItem('binter_routes')) || [];
         let photosData = JSON.parse(localStorage.getItem('binter_photos')) || [];
 
-        // Al cargar la página, se fuerza la pestaña inicio por defecto
         window.addEventListener('DOMContentLoaded', () => {
             switchTab('home');
         });
@@ -1148,7 +1157,6 @@
             mostrarAviso('Sesión cerrada.');
         }
 
-        /* PLANES DE VUELO */
         const fileInput = document.getElementById('planVuelo');
         const fileNameDisplay = document.getElementById('fileNameDisplay');
         let selectedFileData = null;
@@ -1228,14 +1236,12 @@
             mostrarAviso("¡Ruta añadida con éxito!");
         });
 
-        /* FUNCIÓN AVANZADA PARA ENVIAR TODOS LOS PARÁMETROS A SIMBRIEF */
         function abrirSimBrief(airline, flightnum, orig, dest, type, callsign, route) {
             const encodedRoute = encodeURIComponent(route);
             const url = `https://www.simbrief.com/system/dispatch.php?airline=${airline}&fltno=${flightnum}&orig=${orig}&dest=${dest}&type=${type}&callsign=${callsign}&route=${encodedRoute}`;
             window.open(url, '_blank');
         }
 
-        /* GESTIÓN DE FOTOS */
         let selectedPhotosArray = [];
 
         document.getElementById('photoFiles').addEventListener('change', function(e) {
