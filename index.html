@@ -64,7 +64,6 @@
 
         .nav-links {
             display: flex;
-            /* Modificación para asegurar un espacio uniforme y simétrico */
             justify-content: center;
             align-items: center;
             gap: 20px; 
@@ -202,7 +201,6 @@
 
         .search-grid {
             display: grid;
-            /* Modificación para repartir el espacio equitativamente desde el centro hacia los lados en el buscador */
             grid-template-columns: 1fr 1fr auto;
             gap: 20px;
             align-items: end;
@@ -305,7 +303,6 @@
 
         .form-grid {
             display: grid;
-            /* Modificación para distribuir los elementos de los formularios simétricamente */
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 20px;
             justify-content: center;
@@ -482,7 +479,6 @@
             border-radius: 12px;
             padding: 20px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-            /* Modificación para distribuir simétricamente las columnas internas de cada tarjeta de ruta */
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
             justify-content: space-between;
@@ -505,7 +501,6 @@
             margin-top: 3px;
         }
 
-        /* ESTILOS PARA ACCIONES DEL PLAN EN LA PARTE INFERIOR */
         .route-actions-full {
             grid-column: 1 / -1;
             display: flex;
@@ -635,18 +630,20 @@
             overflow-y: auto;
         }
 
-        /* ESTILOS PARA LA GALERÍA DE FOTOS */
+        /* ESTILOS PARA LA GALERÍA DE FOTOS (ESTILO COLLAGE / DISCORD) */
         .photos-container {
             position: relative;
             min-height: 400px;
         }
 
         .photo-collage {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            display: flex;
+            flex-direction: column;
             gap: 20px;
             margin-top: 20px;
-            justify-content: center;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .photo-item-card {
@@ -657,12 +654,60 @@
             display: flex;
             flex-direction: column;
             position: relative;
+            width: 100%;
         }
 
-        .photo-item-card img {
+        /* Contenedor tipo grid estilo Discord adaptado al número de imágenes */
+        .discord-grid-photos {
+            display: grid;
+            gap: 4px;
+            background: #2f3136;
             width: 100%;
-            height: 200px;
+        }
+
+        .discord-grid-photos.count-1 {
+            grid-template-columns: 1fr;
+        }
+        .discord-grid-photos.count-2 {
+            grid-template-columns: 1fr 1fr;
+        }
+        .discord-grid-photos.count-3 {
+            grid-template-columns: 2fr 1fr;
+            grid-template-rows: 1fr 1fr;
+        }
+        .discord-grid-photos.count-3 .discord-img-item:nth-child(1) {
+            grid-row: span 2;
+        }
+        .discord-grid-photos.count-4 {
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+        }
+        .discord-grid-photos.count-5 {
+            grid-template-columns: repeat(6, 1fr);
+            grid-template-rows: 1fr 1fr;
+        }
+        .discord-grid-photos.count-5 .discord-img-item:nth-child(1),
+        .discord-grid-photos.count-5 .discord-img-item:nth-child(2) {
+            grid-column: span 3;
+        }
+        .discord-grid-photos.count-5 .discord-img-item:nth-child(n+3) {
+            grid-column: span 2;
+        }
+
+        .discord-img-item {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            min-height: 150px;
+            max-height: 320px;
+            overflow: hidden;
+        }
+
+        .discord-img-item img {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
+            display: block;
         }
 
         .photo-card-body {
@@ -670,8 +715,6 @@
             display: flex;
             flex-direction: column;
             gap: 6px;
-            flex: 1;
-            justify-content: space-between;
         }
 
         .photo-description {
@@ -703,6 +746,7 @@
             align-items: center;
             justify-content: center;
             box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            z-index: 10;
             transition: transform 0.2s;
         }
 
@@ -1327,21 +1371,23 @@
             const pin = document.getElementById('photoPin').value;
             const description = document.getElementById('photoDescription').value;
 
-            selectedPhotosArray.forEach(photoObj => {
-                const newPhotoEntry = {
-                    id: photoObj.id,
-                    user: username,
-                    pin: pin,
-                    description: description,
-                    image: photoObj.content
-                };
-                photosData.unshift(newPhotoEntry);
-            });
+            // Agrupamos todas las imágenes subidas en una única publicación con un array de imágenes
+            const imagesArray = selectedPhotosArray.map(p => p.content);
+
+            const newPhotoEntry = {
+                id: Date.now(),
+                user: username,
+                pin: pin,
+                description: description,
+                images: imagesArray
+            };
+
+            photosData.unshift(newPhotoEntry);
 
             localStorage.setItem('binter_photos', JSON.stringify(photosData));
             closePhotoModal();
             renderPhotos();
-            mostrarAviso("¡Fotos subidas con éxito!");
+            mostrarAviso("¡Publicación de fotos subida con éxito!");
         });
 
         function renderPhotos() {
@@ -1351,32 +1397,46 @@
                 return;
             }
 
-            container.innerHTML = photosData.map(photo => `
+            container.innerHTML = photosData.map(photo => {
+                // Compatibilidad con registros anteriores (si tenían 'image' en vez de 'array de 'images'')
+                const imgs = photo.images || (photo.image ? [photo.image] : []);
+                const countClass = `count-${Math.min(imgs.length, 5)}`;
+
+                const imagesHtml = imgs.map(imgSrc => `
+                    <div class="discord-img-item">
+                        <img src="${imgSrc}" alt="Foto de la publicación">
+                    </div>
+                `).join('');
+
+                return `
                 <div class="photo-item-card">
-                    <button class="btn-delete-my-photo" onclick="tryDeletePhoto(${photo.id})" title="Eliminar foto">×</button>
-                    <img src="${photo.image}" alt="Foto de usuario">
+                    <button class="btn-delete-my-photo" onclick="tryDeletePhoto(${photo.id})" title="Eliminar publicación">×</button>
+                    <div class="discord-grid-photos ${countClass}">
+                        ${imagesHtml}
+                    </div>
                     <div class="photo-card-body">
                         <div class="photo-description">${photo.description}</div>
                         <div class="photo-user">@${photo.user}</div>
                     </div>
                 </div>
-            `).join('');
+            `;
+            }).join('');
         }
 
         function tryDeletePhoto(id) {
             const photo = photosData.find(p => p.id === id);
             if (!photo) return;
 
-            const inputPin = prompt(`Introduce el PIN secreto establecido para borrar la foto de @${photo.user}:`);
+            const inputPin = prompt(`Introduce el PIN secreto establecido para borrar la publicación de @${photo.user}:`);
             if (inputPin === null) return;
 
             if (inputPin === photo.pin) {
                 photosData = photosData.filter(p => p.id !== id);
                 localStorage.setItem('binter_photos', JSON.stringify(photosData));
                 renderPhotos();
-                mostrarAviso("Foto eliminada correctamente.");
+                mostrarAviso("Publicación eliminada correctamente.");
             } else {
-                mostrarAviso("PIN incorrecto. No puedes borrar esta foto.");
+                mostrarAviso("PIN incorrecto. No puedes borrar esta publicación.");
             }
         }
 
@@ -1388,26 +1448,31 @@
                 return;
             }
 
-            container.innerHTML = photosData.map(photo => `
+            container.innerHTML = photosData.map(photo => {
+                const imgs = photo.images || (photo.image ? [photo.image] : []);
+                const firstImg = imgs[0] || '';
+
+                return `
                 <div class="route-card" style="border-left-color: var(--warning-color);">
                     <div><div class="route-item-title">USUARIO</div><div class="route-item-value">@${photo.user}</div></div>
                     <div><div class="route-item-title">DESCRIPCIÓN</div><div class="route-item-value" style="font-size: 13px;">${photo.description}</div></div>
-                    <div><div class="route-item-title">FOTO</div><img src="${photo.image}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 6px;"></div>
+                    <div><div class="route-item-title">FOTOS (${imgs.length})</div><img src="${firstImg}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 6px;"></div>
                     <div>
                         <button class="btn-edit" onclick="openEditPhotoModal(${photo.id})">EDITAR</button>
                         <button class="btn-delete" onclick="adminDeletePhoto(${photo.id})">ELIMINAR</button>
                     </div>
                 </div>
-            `).join('');
+            `;
+            }).join('');
         }
 
         function adminDeletePhoto(id) {
-            if (confirm('¿Estás seguro de que deseas eliminar esta foto como administrador?')) {
+            if (confirm('¿Estás seguro de que deseas eliminar esta publicación como administrador?')) {
                 photosData = photosData.filter(p => p.id !== id);
                 localStorage.setItem('binter_photos', JSON.stringify(photosData));
                 renderAdminPhotos();
                 renderPhotos();
-                mostrarAviso("Foto eliminada por el administrador.");
+                mostrarAviso("Publicación eliminada por el administrador.");
             }
         }
 
@@ -1445,7 +1510,7 @@
             closeEditPhotoModal();
             renderAdminPhotos();
             renderPhotos();
-            mostrarAviso("¡Foto actualizada con éxito!");
+            mostrarAviso("¡Publicación actualizada con éxito!");
         });
 
         function renderRoutes() {
