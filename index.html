@@ -657,7 +657,6 @@
             width: 100%;
         }
 
-        /* Contenedor tipo grid estilo Discord adaptado al número de imágenes */
         .discord-grid-photos {
             display: grid;
             gap: 4px;
@@ -785,38 +784,36 @@
             fill: white;
         }
 
-        /* CARTEL DE AVISOS PERSONALIZADO */
+        /* CARTEL DE AVISOS PERSONALIZADO ESTÁTICO EN EL MEDIO */
         #custom-toast-container {
             position: fixed;
-            top: 20px;
-            right: 20px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             z-index: 9999;
             display: flex;
             flex-direction: column;
             gap: 10px;
+            align-items: center;
         }
 
         .custom-toast {
             background-color: var(--binter-green);
             color: #ffffff;
-            padding: 15px 25px;
-            border-radius: 8px;
+            padding: 20px 30px;
+            border-radius: 12px;
             font-weight: 700;
-            font-size: 14px;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-            animation: slideInRight 0.3s ease-out, fadeOut 0.3s ease-in 2.7s forwards;
-            max-width: 350px;
+            font-size: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            animation: fadeInCenter 0.3s ease-out;
+            max-width: 450px;
+            text-align: center;
             text-transform: uppercase;
         }
 
-        @keyframes slideInRight {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-
-        @keyframes fadeOut {
-            from { opacity: 1; }
-            to { opacity: 0; transform: translateY(-10px); }
+        @keyframes fadeInCenter {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
         }
     </style>
 </head>
@@ -1132,14 +1129,15 @@
 
         function mostrarAviso(mensaje) {
             const container = document.getElementById('custom-toast-container');
+            container.innerHTML = '';
+
             const toast = document.createElement('div');
             toast.className = 'custom-toast';
-            toast.textContent = mensaje;
+            toast.innerHTML = `
+                <div style="margin-bottom: 12px;">${mensaje}</div>
+                <button onclick="this.parentElement.remove()" style="background: white; color: var(--binter-green-dark); border: none; padding: 6px 16px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 12px; text-transform: uppercase;">ENTENDIDO</button>
+            `;
             container.appendChild(toast);
-
-            setTimeout(() => {
-                toast.remove();
-            }, 3000);
         }
 
         function switchTab(tabName) {
@@ -1371,7 +1369,6 @@
             const pin = document.getElementById('photoPin').value;
             const description = document.getElementById('photoDescription').value;
 
-            // Agrupamos todas las imágenes subidas en una única publicación con un array de imágenes
             const imagesArray = selectedPhotosArray.map(p => p.content);
 
             const newPhotoEntry = {
@@ -1398,7 +1395,6 @@
             }
 
             container.innerHTML = photosData.map(photo => {
-                // Compatibilidad con registros anteriores (si tenían 'image' en vez de 'array de 'images'')
                 const imgs = photo.images || (photo.image ? [photo.image] : []);
                 const countClass = `count-${Math.min(imgs.length, 5)}`;
 
@@ -1427,8 +1423,31 @@
             const photo = photosData.find(p => p.id === id);
             if (!photo) return;
 
-            const inputPin = prompt(`Introduce el PIN secreto establecido para borrar la publicación de @${photo.user}:`);
-            if (inputPin === null) return;
+            const container = document.getElementById('custom-toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'custom-toast';
+            toast.style.fontWeight = 'bold';
+            toast.innerHTML = `
+                <div style="font-weight: 700; margin-bottom: 8px;">Introduce el PIN para borrar la publicación de @${photo.user}:</div>
+                <input type="password" id="inputPinForDelete" placeholder="PIN" style="width: 100%; margin-top: 5px; padding: 8px; border-radius: 6px; border: none; font-weight: bold; text-align: center; font-size: 15px; outline: none;">
+                <div style="margin-top: 12px; display: flex; gap: 8px;">
+                    <button onclick="confirmDeletePhoto(${id})" style="flex: 1; padding: 8px; background: #ffffff; color: var(--binter-green-dark); border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 12px; text-transform: uppercase;">ACEPTAR</button>
+                    <button onclick="cancelDeletePhoto()" style="flex: 1; padding: 8px; background: rgba(255,255,255,0.3); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 12px; text-transform: uppercase;">CANCELAR</button>
+                </div>
+            `;
+            
+            container.innerHTML = '';
+            container.appendChild(toast);
+
+            const inputField = document.getElementById('inputPinForDelete');
+            if (inputField) inputField.focus();
+        }
+
+        function confirmDeletePhoto(id) {
+            const inputField = document.getElementById('inputPinForDelete');
+            const inputPin = inputField ? inputField.value : '';
+            const photo = photosData.find(p => p.id === id);
+            if (!photo) return;
 
             if (inputPin === photo.pin) {
                 photosData = photosData.filter(p => p.id !== id);
@@ -1438,6 +1457,11 @@
             } else {
                 mostrarAviso("PIN incorrecto. No puedes borrar esta publicación.");
             }
+        }
+
+        function cancelDeletePhoto() {
+            const container = document.getElementById('custom-toast-container');
+            container.innerHTML = '';
         }
 
         function renderAdminPhotos() {
