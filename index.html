@@ -14,6 +14,7 @@
             --border-color: #cfd8dc;
             --danger-color: #e53935;
             --warning-color: #f57c00;
+            --simbrief-color: #004080;
         }
 
         * {
@@ -464,26 +465,6 @@
             background-color: var(--binter-green-dark);
         }
 
-        .btn-transparent-dark {
-            background-color: rgba(30, 30, 30, 0.75);
-            backdrop-filter: blur(5px);
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            width: 100%;
-            padding: 15px;
-            font-size: 16px;
-            font-weight: 700;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-top: 20px;
-            transition: background 0.2s, transform 0.2s;
-        }
-
-        .btn-transparent-dark:hover {
-            background-color: rgba(20, 20, 20, 0.9);
-            transform: translateY(-1px);
-        }
-
         .routes-list {
             display: flex;
             flex-direction: column;
@@ -516,23 +497,60 @@
             margin-top: 3px;
         }
 
+        /* ESTILOS PARA ACCIONES DEL PLAN EN LA PARTE INFERIOR */
+        .route-actions-full {
+            grid-column: 1 / -1;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-top: 5px;
+        }
+
+        .route-buttons-row {
+            display: flex;
+            gap: 10px;
+        }
+
         .btn-download {
             background-color: var(--binter-green);
             color: white;
-            padding: 10px 16px;
+            padding: 8px 12px;
             border-radius: 6px;
             text-decoration: none;
             font-weight: 700;
-            font-size: 13px;
+            font-size: 12px;
             display: inline-block;
             text-align: center;
             transition: background 0.2s;
             border: none;
             cursor: pointer;
+            flex: 1;
+            margin-bottom: 0;
         }
 
         .btn-download:hover {
             background-color: var(--binter-green-dark);
+        }
+
+        .btn-simbrief {
+            background-color: var(--simbrief-color);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 12px;
+            display: inline-block;
+            text-align: center;
+            transition: background 0.2s;
+            border: none;
+            cursor: pointer;
+            flex: 1;
+            margin-bottom: 0;
+        }
+
+        .btn-simbrief:hover {
+            background-color: #00264d;
         }
 
         .btn-edit {
@@ -608,20 +626,20 @@
             overflow-y: auto;
         }
 
-        /* GALERÍA DE FOTOS ESTILO DISCORD (COLLAGE) */
+        /* ESTILOS PARA LA GALERÍA DE FOTOS */
         .photos-container {
             position: relative;
             min-height: 400px;
         }
 
-        .photo-collage-feed {
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
+        .photo-collage {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 20px;
             margin-top: 20px;
         }
 
-        .photo-group-card {
+        .photo-item-card {
             background: white;
             border-radius: 12px;
             overflow: hidden;
@@ -629,6 +647,34 @@
             display: flex;
             flex-direction: column;
             position: relative;
+        }
+
+        .photo-item-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .photo-card-body {
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            flex: 1;
+            justify-content: space-between;
+        }
+
+        .photo-description {
+            font-size: 14px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .photo-user {
+            font-size: 12px;
+            color: var(--binter-green-dark);
+            font-weight: 700;
+            text-transform: uppercase;
         }
 
         .btn-delete-my-photo {
@@ -648,110 +694,10 @@
             justify-content: center;
             box-shadow: 0 2px 8px rgba(0,0,0,0.3);
             transition: transform 0.2s;
-            z-index: 10;
         }
 
         .btn-delete-my-photo:hover {
             transform: scale(1.1);
-        }
-
-        /* Contenedor Grid según la cantidad de imágenes */
-        .discord-grid {
-            display: grid;
-            gap: 4px;
-            background: #eee;
-            width: 100%;
-        }
-
-        /* 1 Foto */
-        .discord-grid.count-1 {
-            grid-template-columns: 1fr;
-        }
-        .discord-grid.count-1 img {
-            width: 100%;
-            max-height: 400px;
-            object-fit: cover;
-        }
-
-        /* 2 Fotos */
-        .discord-grid.count-2 {
-            grid-template-columns: 1fr 1fr;
-        }
-        .discord-grid.count-2 img {
-            width: 100%;
-            height: 280px;
-            object-fit: cover;
-        }
-
-        /* 3 Fotos */
-        .discord-grid.count-3 {
-            grid-template-columns: 2fr 1fr;
-            grid-template-rows: 1fr 1fr;
-        }
-        .discord-grid.count-3 img:nth-child(1) {
-            grid-row: span 2;
-            width: 100%;
-            height: 320px;
-            object-fit: cover;
-        }
-        .discord-grid.count-3 img:nth-child(2),
-        .discord-grid.count-3 img:nth-child(3) {
-            width: 100%;
-            height: 158px;
-            object-fit: cover;
-        }
-
-        /* 4 Fotos */
-        .discord-grid.count-4 {
-            grid-template-columns: 1fr 1fr;
-            grid-template-rows: 1fr 1fr;
-        }
-        .discord-grid.count-4 img {
-            width: 100%;
-            height: 160px;
-            object-fit: cover;
-        }
-
-        /* 5 Fotos */
-        .discord-grid.count-5 {
-            grid-template-columns: repeat(6, 1fr);
-            grid-template-rows: 160px 160px;
-        }
-        .discord-grid.count-5 img:nth-child(1),
-        .discord-grid.count-5 img:nth-child(2) {
-            grid-column: span 3;
-            width: 100%;
-            height: 160px;
-            object-fit: cover;
-        }
-        .discord-grid.count-5 img:nth-child(3),
-        .discord-grid.count-5 img:nth-child(4),
-        .discord-grid.count-5 img:nth-child(5) {
-            grid-column: span 2;
-            width: 100%;
-            height: 160px;
-            object-fit: cover;
-        }
-
-        .photo-card-body {
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            background: white;
-        }
-
-        .photo-description {
-            font-size: 14px;
-            color: #333;
-            font-weight: 600;
-        }
-
-        .photo-user {
-            font-size: 12px;
-            color: var(--binter-green-dark);
-            font-weight: 700;
-            text-transform: uppercase;
         }
 
         /* BOTÓN FLOTANTE DE CÁMARA */
@@ -785,7 +731,7 @@
             fill: white;
         }
 
-        /* CARTEL DE AVISOS */
+        /* CARTEL DE AVISOS PERSONALIZADO */
         #custom-toast-container {
             position: fixed;
             top: 20px;
@@ -896,7 +842,7 @@
     <div id="view-photos" class="view">
         <div class="card photos-container">
             <h2 class="card-title">GALERÍA DE FOTOS</h2>
-            <div id="photosContainer" class="photo-collage-feed"></div>
+            <div id="photosContainer" class="photo-collage"></div>
         </div>
 
         <button class="floating-camera-btn" onclick="openPhotoModal()" title="Subir Fotos">
@@ -926,18 +872,33 @@
                     <form id="routeForm">
                         <div class="form-grid">
                             <div class="form-group">
-                                <label for="vuelo">Nº VUELO</label>
-                                <input type="text" id="vuelo" placeholder="EJ: NT 221" required>
+                                <label for="vuelo">Nº VUELO / FLIGHT NO (EJ: 221)</label>
+                                <input type="text" id="vuelo" placeholder="EJ: 221" required>
                             </div>
 
                             <div class="form-group">
-                                <label for="aeronave">AERONAVE</label>
-                                <input type="text" id="aeronave" placeholder="EJ: ATR 72-600" required>
+                                <label for="airline">AIRLINE ICAO (EJ: NTB)</label>
+                                <input type="text" id="airline" placeholder="EJ: NTB" required>
                             </div>
 
                             <div class="form-group">
-                                <label for="icao">ICAO (ORIGEN - DESTINO)</label>
-                                <input type="text" id="icao" placeholder="EJ: GCXO - GCLP" required>
+                                <label for="callsign">ATC CALLSIGN (EJ: BINTER)</label>
+                                <input type="text" id="callsign" placeholder="EJ: BINTER" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="aeronave">AIRCRAFT TYPE (EJ: AT76)</label>
+                                <input type="text" id="aeronave" placeholder="EJ: AT76" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="origenIcao">DEPART ICAO (EJ: GCXO)</label>
+                                <input type="text" id="origenIcao" placeholder="EJ: GCXO" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="destinoIcao">ARRIVE ICAO (EJ: GCLP)</label>
+                                <input type="text" id="destinoIcao" placeholder="EJ: GCLP" required>
                             </div>
 
                             <div class="form-group">
@@ -951,12 +912,12 @@
                             </div>
 
                             <div class="form-group full-width">
-                                <label for="ruta">RUTA</label>
+                                <label for="ruta">ROUTE (PLAN DE RUTA)</label>
                                 <input type="text" id="ruta" placeholder="EJ: LERAM W110 SIMUR" required>
                             </div>
 
                             <div class="form-group full-width">
-                                <label>PLAN DE VUELO</label>
+                                <label>PLAN DE VUELO (ARCHIVO)</label>
                                 <div class="file-upload-zone">
                                     <span style="font-size: 30px;">📄</span>
                                     <p style="margin-top:5px; color: #555;">HAZ CLIC O ARRASTRA AQUÍ TU PLAN DE VUELO</p>
@@ -979,18 +940,6 @@
         </div>
     </div>
 
-    <div id="deletePinModal" class="modal">
-        <div class="modal-content" style="max-width: 400px; text-align: center;">
-            <h3 style="margin-bottom: 15px; color: var(--binter-green-dark);">ELIMINAR GRUPO DE FOTOS</h3>
-            <p id="deletePinModalText" style="font-size: 13px; color: #666; margin-bottom: 20px; font-weight: 600;"></p>
-            <input type="password" id="inputDeletePin" placeholder="INTRODUCE EL PIN" style="width: 100%; text-align: center; margin-bottom: 10px; font-size: 16px; letter-spacing: 2px;">
-            <div style="display: flex; gap: 10px; margin-top: 15px;">
-                <button type="button" class="btn-transparent-dark" onclick="confirmDeletePhotoGroup()" style="margin-top:0;">CONTINUAR</button>
-                <button type="button" class="btn-submit" style="margin-top:0; background: #78909c;" onclick="closeDeletePinModal()">CANCELAR</button>
-            </div>
-        </div>
-    </div>
-
     <div id="editModal" class="modal">
         <div class="modal-content">
             <h3 style="margin-bottom: 20px; color: var(--binter-green-dark);">EDITAR RUTA</h3>
@@ -1002,12 +951,24 @@
                         <input type="text" id="edit-vuelo" required>
                     </div>
                     <div class="form-group">
-                        <label>AERONAVE</label>
+                        <label>AIRLINE ICAO</label>
+                        <input type="text" id="edit-airline" required>
+                    </div>
+                    <div class="form-group">
+                        <label>ATC CALLSIGN</label>
+                        <input type="text" id="edit-callsign" required>
+                    </div>
+                    <div class="form-group">
+                        <label>AIRCRAFT TYPE</label>
                         <input type="text" id="edit-aeronave" required>
                     </div>
                     <div class="form-group">
-                        <label>ICAO</label>
-                        <input type="text" id="edit-icao" required>
+                        <label>DEPART ICAO</label>
+                        <input type="text" id="edit-origenIcao" required>
+                    </div>
+                    <div class="form-group">
+                        <label>ARRIVE ICAO</label>
+                        <input type="text" id="edit-destinoIcao" required>
                     </div>
                     <div class="form-group">
                         <label>TIEMPO</label>
@@ -1018,7 +979,7 @@
                         <input type="text" id="edit-estacionamiento" required>
                     </div>
                     <div class="form-group full-width">
-                        <label>RUTA</label>
+                        <label>ROUTE</label>
                         <input type="text" id="edit-ruta" required>
                     </div>
                     
@@ -1042,9 +1003,9 @@
 
     <div id="editPhotoModal" class="modal">
         <div class="modal-content">
-            <h3 style="margin-bottom: 20px; color: var(--binter-green-dark);">EDITAR TEXTOS DE PUBLICACIÓN</h3>
+            <h3 style="margin-bottom: 20px; color: var(--binter-green-dark);">EDITAR TEXTOS DE FOTO</h3>
             <form id="editPhotoForm">
-                <input type="hidden" id="edit-photo-group-id">
+                <input type="hidden" id="edit-photo-id">
                 <div class="form-grid">
                     <div class="form-group full-width">
                         <label>NOMBRE DE USUARIO</label>
@@ -1084,9 +1045,9 @@
                     </div>
 
                     <div class="form-group full-width">
-                        <label>SELECCIONAR O PEGAR FOTOS</label>
+                        <label>SELECCIONAR FOTOS</label>
                         <div id="photoUploadGrid" class="photo-upload-grid">
-                            <div class="btn-add-more-box" id="addMoreBox" title="Haz clic o pega aquí tus imágenes (Ctrl+V)">
+                            <div class="btn-add-more-box" id="addMoreBox">
                                 <span class="plus-icon">+</span>
                                 <span class="btn-add-more-text">AÑADIR</span>
                                 <input type="file" id="photoFiles" multiple accept="image/*">
@@ -1107,11 +1068,11 @@
         const ADMIN_CODE = "1989";
         let isAdminLoggedIn = false;
         let activeFilter = null;
-        let groupToDeleteId = null;
 
         let routesData = JSON.parse(localStorage.getItem('binter_routes')) || [];
-        let photoGroupsData = JSON.parse(localStorage.getItem('binter_photo_groups')) || [];
+        let photosData = JSON.parse(localStorage.getItem('binter_photos')) || [];
 
+        // Al cargar la página, se fuerza la pestaña inicio por defecto
         window.addEventListener('DOMContentLoaded', () => {
             switchTab('home');
         });
@@ -1239,14 +1200,21 @@
                 return;
             }
 
+            const origenIcao = document.getElementById('origenIcao').value.toUpperCase().trim();
+            const destinoIcao = document.getElementById('destinoIcao').value.toUpperCase().trim();
+
             const newRoute = {
                 id: Date.now(),
-                vuelo: document.getElementById('vuelo').value.toUpperCase(),
-                aeronave: document.getElementById('aeronave').value.toUpperCase(),
-                icao: document.getElementById('icao').value.toUpperCase(),
-                tiempo: document.getElementById('tiempo').value.toUpperCase(),
-                estacionamiento: document.getElementById('estacionamiento').value.toUpperCase(),
-                ruta: document.getElementById('ruta').value.toUpperCase(),
+                vuelo: document.getElementById('vuelo').value.toUpperCase().trim(),
+                airline: document.getElementById('airline').value.toUpperCase().trim(),
+                callsign: document.getElementById('callsign').value.toUpperCase().trim(),
+                aeronave: document.getElementById('aeronave').value.toUpperCase().trim(),
+                origenIcao: origenIcao,
+                destinoIcao: destinoIcao,
+                icao: `${origenIcao} - ${destinoIcao}`,
+                tiempo: document.getElementById('tiempo').value.toUpperCase().trim(),
+                estacionamiento: document.getElementById('estacionamiento').value.toUpperCase().trim(),
+                ruta: document.getElementById('ruta').value.toUpperCase().trim(),
                 file: selectedFileData
             };
 
@@ -1260,110 +1228,43 @@
             mostrarAviso("¡Ruta añadida con éxito!");
         });
 
-        /* GESTIÓN DE FOTOS MÚLTIPLES (OPTIMIZACIÓN, SIN LÍMITE DE PESO Y SOPORTE DE PEGADO) */
+        /* FUNCIÓN AVANZADA PARA ENVIAR TODOS LOS PARÁMETROS A SIMBRIEF */
+        function abrirSimBrief(airline, flightnum, orig, dest, type, callsign, route) {
+            const encodedRoute = encodeURIComponent(route);
+            const url = `https://www.simbrief.com/system/dispatch.php?airline=${airline}&fltno=${flightnum}&orig=${orig}&dest=${dest}&type=${type}&callsign=${callsign}&route=${encodedRoute}`;
+            window.open(url, '_blank');
+        }
+
+        /* GESTIÓN DE FOTOS */
         let selectedPhotosArray = [];
 
-        function resizeImageToDataURL(file, maxWidth = 1600, maxHeight = 1600, quality = 0.85) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = function(event) {
-                    const img = new Image();
-                    img.src = event.target.result;
-                    img.onload = function() {
-                        let width = img.width;
-                        let height = img.height;
-
-                        if (width > maxWidth || height > maxHeight) {
-                            if (width > height) {
-                                height = Math.round((height * maxWidth) / width);
-                                width = maxWidth;
-                            } else {
-                                width = Math.round((width * maxHeight) / height);
-                                height = maxHeight;
-                            }
-                        }
-
-                        const canvas = document.createElement('canvas');
-                        canvas.width = width;
-                        canvas.height = height;
-                        const ctx = canvas.getContext('2d');
-                        ctx.drawImage(img, 0, 0, width, height);
-
-                        const dataUrl = canvas.toDataURL('image/jpeg', quality);
-                        resolve(dataUrl);
-                    };
-                    img.onerror = function(err) {
-                        reject(err);
-                    };
-                };
-                reader.onerror = function(err) {
-                    reject(err);
-                };
-            });
-        }
-
-        async function processAndAddPhotoFile(file) {
-            if (selectedPhotosArray.length >= 5) {
-                mostrarAviso("Ya has alcanzado el límite máximo de 5 fotos.");
-                return;
-            }
-
-            try {
-                const optimizedDataUrl = await resizeImageToDataURL(file);
-                selectedPhotosArray.push({
-                    id: Date.now() + Math.random(),
-                    content: optimizedDataUrl
-                });
-                updatePhotoPreviewUI();
-            } catch (err) {
-                console.error("Error al procesar la imagen:", err);
-                mostrarAviso("Hubo un error al procesar la foto.");
-            }
-        }
-
-        document.getElementById('photoFiles').addEventListener('change', async function(e) {
+        document.getElementById('photoFiles').addEventListener('change', function(e) {
             const files = e.target.files;
             if (!files || files.length === 0) return;
 
             const remainingSlots = 5 - selectedPhotosArray.length;
+            if (remainingSlots <= 0) {
+                mostrarAviso("Ya has alcanzado el límite máximo de 5 fotos.");
+                this.value = "";
+                return;
+            }
+
             const filesToProcess = Array.from(files).slice(0, remainingSlots);
 
-            for (const file of filesToProcess) {
-                await processAndAddPhotoFile(file);
-            }
+            filesToProcess.forEach(file => {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    selectedPhotosArray.push({
+                        id: Date.now() + Math.random(),
+                        name: file.name,
+                        content: event.target.result
+                    });
+                    updatePhotoPreviewUI();
+                };
+                reader.readAsDataURL(file);
+            });
 
             this.value = "";
-        });
-
-        // Evento global de pegado (Ctrl+V) cuando el modal de fotos está activo
-        document.addEventListener('paste', async function(e) {
-            const photoModal = document.getElementById('photoModal');
-            if (!photoModal.classList.contains('active')) return;
-
-            const items = e.clipboardData || e.originalEvent.clipboardData;
-            if (!items || !items.items) return;
-
-            let pastedCount = 0;
-            for (const item of items.items) {
-                if (item.type.indexOf('image') !== -1) {
-                    const blob = item.getAsFile();
-                    if (blob) {
-                        e.preventDefault();
-                        if (selectedPhotosArray.length < 5) {
-                            await processAndAddPhotoFile(blob);
-                            pastedCount++;
-                        } else {
-                            mostrarAviso("Límite de 5 fotos alcanzado.");
-                            break;
-                        }
-                    }
-                }
-            }
-
-            if (pastedCount > 0) {
-                mostrarAviso(`¡Imagen pegada correctamente! (${pastedCount})`);
-            }
         });
 
         function removeSelectedPhoto(id) {
@@ -1412,7 +1313,7 @@
         document.getElementById('photoForm').addEventListener('submit', function(e) {
             e.preventDefault();
             if (selectedPhotosArray.length === 0) {
-                mostrarAviso("Por favor, selecciona o pega al menos una foto.");
+                mostrarAviso("Por favor, selecciona al menos una foto.");
                 return;
             }
 
@@ -1420,132 +1321,97 @@
             const pin = document.getElementById('photoPin').value;
             const description = document.getElementById('photoDescription').value;
 
-            const newPhotoGroup = {
-                id: Date.now(),
-                user: username,
-                pin: pin,
-                description: description,
-                images: selectedPhotosArray.map(p => p.content)
-            };
+            selectedPhotosArray.forEach(photoObj => {
+                const newPhotoEntry = {
+                    id: photoObj.id,
+                    user: username,
+                    pin: pin,
+                    description: description,
+                    image: photoObj.content
+                };
+                photosData.unshift(newPhotoEntry);
+            });
 
-            photoGroupsData.unshift(newPhotoGroup);
-            
-            try {
-                localStorage.setItem('binter_photo_groups', JSON.stringify(photoGroupsData));
-            } catch (storageErr) {
-                console.error(storageErr);
-                mostrarAviso("Almacenamiento lleno. Borra algunas publicaciones antiguas.");
-                photoGroupsData.shift(); 
-                return;
-            }
-
+            localStorage.setItem('binter_photos', JSON.stringify(photosData));
             closePhotoModal();
             renderPhotos();
-            mostrarAviso("¡Publicación subida con éxito!");
+            mostrarAviso("¡Fotos subidas con éxito!");
         });
 
         function renderPhotos() {
             const container = document.getElementById('photosContainer');
-            if (photoGroupsData.length === 0) {
+            if (photosData.length === 0) {
                 container.innerHTML = `<div class="empty-routes" style="grid-column: 1 / -1;">NO HAY FOTOS SUBIDAS TODAVÍA. HAZ CLIC EN EL BOTÓN DE LA CÁMARA PARA AÑADIR LAS PRIMERAS.</div>`;
                 return;
             }
 
-            container.innerHTML = photoGroupsData.map(group => {
-                const count = group.images.length;
-                const gridClass = `discord-grid count-${count}`;
-                
-                const imagesHTML = group.images.map(imgSrc => `<img src="${imgSrc}" alt="Foto de grupo">`).join('');
-
-                return `
-                    <div class="photo-group-card">
-                        <button class="btn-delete-my-photo" onclick="tryDeletePhotoGroup(${group.id})" title="Eliminar publicación">×</button>
-                        <div class="${gridClass}">
-                            ${imagesHTML}
-                        </div>
-                        <div class="photo-card-body">
-                            <div class="photo-description">${group.description}</div>
-                            <div class="photo-user">@${group.user}</div>
-                        </div>
+            container.innerHTML = photosData.map(photo => `
+                <div class="photo-item-card">
+                    <button class="btn-delete-my-photo" onclick="tryDeletePhoto(${photo.id})" title="Eliminar foto">×</button>
+                    <img src="${photo.image}" alt="Foto de usuario">
+                    <div class="photo-card-body">
+                        <div class="photo-description">${photo.description}</div>
+                        <div class="photo-user">@${photo.user}</div>
                     </div>
-                `;
-            }).join('');
+                </div>
+            `).join('');
         }
 
-        /* MODAL DE PIN PERSONALIZADO */
-        function tryDeletePhotoGroup(id) {
-            const group = photoGroupsData.find(g => g.id === id);
-            if (!group) return;
+        function tryDeletePhoto(id) {
+            const photo = photosData.find(p => p.id === id);
+            if (!photo) return;
 
-            groupToDeleteId = id;
-            document.getElementById('deletePinModalText').textContent = `INTRODUCE EL PIN SECRETO PARA BORRAR LA PUBLICACIÓN DE @${group.user}:`;
-            document.getElementById('inputDeletePin').value = '';
-            document.getElementById('deletePinModal').classList.add('active');
-        }
+            const inputPin = prompt(`Introduce el PIN secreto establecido para borrar la foto de @${photo.user}:`);
+            if (inputPin === null) return;
 
-        function closeDeletePinModal() {
-            document.getElementById('deletePinModal').classList.remove('active');
-            groupToDeleteId = null;
-        }
-
-        function confirmDeletePhotoGroup() {
-            const inputPin = document.getElementById('inputDeletePin').value;
-            const group = photoGroupsData.find(g => g.id === groupToDeleteId);
-
-            if (!group) {
-                closeDeletePinModal();
-                return;
-            }
-
-            if (inputPin === group.pin) {
-                photoGroupsData = photoGroupsData.filter(g => g.id !== groupToDeleteId);
-                localStorage.setItem('binter_photo_groups', JSON.stringify(photoGroupsData));
+            if (inputPin === photo.pin) {
+                photosData = photosData.filter(p => p.id !== id);
+                localStorage.setItem('binter_photos', JSON.stringify(photosData));
                 renderPhotos();
-                closeDeletePinModal();
-                mostrarAviso("Publicación eliminada correctamente.");
+                mostrarAviso("Foto eliminada correctamente.");
             } else {
-                mostrarAviso("PIN incorrecto. No puedes borrar esta publicación.");
+                mostrarAviso("PIN incorrecto. No puedes borrar esta foto.");
             }
         }
 
         function renderAdminPhotos() {
             const container = document.getElementById('adminPhotosContainer');
             if (!container) return;
-            if (photoGroupsData.length === 0) {
+            if (photosData.length === 0) {
                 container.innerHTML = `<div class="empty-routes">NO HAY FOTOS PARA ADMINISTRAR.</div>`;
                 return;
             }
 
-            container.innerHTML = photoGroupsData.map(group => `
+            container.innerHTML = photosData.map(photo => `
                 <div class="route-card" style="border-left-color: var(--warning-color);">
-                    <div><div class="route-item-title">USUARIO</div><div class="route-item-value">@${group.user}</div></div>
-                    <div><div class="route-item-title">DESCRIPCIÓN</div><div class="route-item-value" style="font-size: 13px;">${group.description}</div></div>
-                    <div><div class="route-item-title">CANTIDAD</div><div class="route-item-value">${group.images.length} FOTO(S)</div></div>
+                    <div><div class="route-item-title">USUARIO</div><div class="route-item-value">@${photo.user}</div></div>
+                    <div><div class="route-item-title">DESCRIPCIÓN</div><div class="route-item-value" style="font-size: 13px;">${photo.description}</div></div>
+                    <div><div class="route-item-title">FOTO</div><img src="${photo.image}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 6px;"></div>
                     <div>
-                        <button class="btn-edit" onclick="openEditPhotoModal(${group.id})">EDITAR</button>
-                        <button class="btn-delete" onclick="adminDeletePhotoGroup(${group.id})">ELIMINAR</button>
+                        <button class="btn-edit" onclick="openEditPhotoModal(${photo.id})">EDITAR</button>
+                        <button class="btn-delete" onclick="adminDeletePhoto(${photo.id})">ELIMINAR</button>
                     </div>
                 </div>
             `).join('');
         }
 
-        function adminDeletePhotoGroup(id) {
-            if (confirm('¿Estás seguro de que deseas eliminar esta publicación completa como administrador?')) {
-                photoGroupsData = photoGroupsData.filter(g => g.id !== id);
-                localStorage.setItem('binter_photo_groups', JSON.stringify(photoGroupsData));
+        function adminDeletePhoto(id) {
+            if (confirm('¿Estás seguro de que deseas eliminar esta foto como administrador?')) {
+                photosData = photosData.filter(p => p.id !== id);
+                localStorage.setItem('binter_photos', JSON.stringify(photosData));
                 renderAdminPhotos();
                 renderPhotos();
-                mostrarAviso("Publicación eliminada por el administrador.");
+                mostrarAviso("Foto eliminada por el administrador.");
             }
         }
 
         function openEditPhotoModal(id) {
-            const group = photoGroupsData.find(g => g.id === id);
-            if (!group) return;
+            const photo = photosData.find(p => p.id === id);
+            if (!photo) return;
 
-            document.getElementById('edit-photo-group-id').value = group.id;
-            document.getElementById('edit-photo-user').value = group.user;
-            document.getElementById('edit-photo-description').value = group.description;
+            document.getElementById('edit-photo-id').value = photo.id;
+            document.getElementById('edit-photo-user').value = photo.user;
+            document.getElementById('edit-photo-description').value = photo.description;
 
             document.getElementById('editPhotoModal').classList.add('active');
         }
@@ -1556,24 +1422,24 @@
 
         document.getElementById('editPhotoForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            const id = Number(document.getElementById('edit-photo-group-id').value);
+            const id = Number(document.getElementById('edit-photo-id').value);
 
-            photoGroupsData = photoGroupsData.map(group => {
-                if (group.id === id) {
+            photosData = photosData.map(photo => {
+                if (photo.id === id) {
                     return {
-                        ...group,
+                        ...photo,
                         user: document.getElementById('edit-photo-user').value.toUpperCase(),
                         description: document.getElementById('edit-photo-description').value
                     };
                 }
-                return group;
+                return photo;
             });
 
-            localStorage.setItem('binter_photo_groups', JSON.stringify(photoGroupsData));
+            localStorage.setItem('binter_photos', JSON.stringify(photosData));
             closeEditPhotoModal();
             renderAdminPhotos();
             renderPhotos();
-            mostrarAviso("¡Publicación actualizada con éxito!");
+            mostrarAviso("¡Foto actualizada con éxito!");
         });
 
         function renderRoutes() {
@@ -1585,9 +1451,10 @@
 
             if (activeFilter) {
                 filteredRoutes = routesData.filter(route => {
-                    const icaoUpper = route.icao.toUpperCase();
-                    const matchesOrigen = activeFilter.origen ? icaoUpper.includes(activeFilter.origen) : true;
-                    const matchesDestino = activeFilter.destino ? icaoUpper.includes(activeFilter.destino) : true;
+                    const orig = (route.origenIcao || "").toUpperCase();
+                    const dest = (route.destinoIcao || "").toUpperCase();
+                    const matchesOrigen = activeFilter.origen ? orig.includes(activeFilter.origen) : true;
+                    const matchesDestino = activeFilter.destino ? dest.includes(activeFilter.destino) : true;
                     return matchesOrigen && matchesDestino;
                 });
                 titleText.textContent = `RESULTADOS DE BÚSQUEDA`;
@@ -1602,20 +1469,34 @@
                 return;
             }
 
-            container.innerHTML = filteredRoutes.map(route => `
+            container.innerHTML = filteredRoutes.map(route => {
+                const airline = route.airline || "NTB";
+                const flightNum = route.vuelo || "221";
+                const orig = route.origenIcao || "GCXO";
+                const dest = route.destinoIcao || "GCLP";
+                const aircraft = route.aeronave || "AT76";
+                const callsign = route.callsign || "BINTER";
+                const routeText = route.ruta || "";
+
+                return `
                 <div class="route-card">
-                    <div><div class="route-item-title">Nº VUELO</div><div class="route-item-value">${route.vuelo}</div></div>
-                    <div><div class="route-item-title">AERONAVE</div><div class="route-item-value">${route.aeronave || '-'}</div></div>
-                    <div><div class="route-item-title">ICAO</div><div class="route-item-value">${route.icao}</div></div>
+                    <div><div class="route-item-title">Nº VUELO</div><div class="route-item-value">${callsign}</div></div>
+                    <div><div class="route-item-title">AERONAVE</div><div class="route-item-value">${aircraft}</div></div>
+                    <div><div class="route-item-title">ORIGEN - DESTINO</div><div class="route-item-value">${route.icao}</div></div>
                     <div><div class="route-item-title">TIEMPO</div><div class="route-item-value">${route.tiempo}</div></div>
                     <div><div class="route-item-title">ESTACIONAMIENTO</div><div class="route-item-value">${route.estacionamiento}</div></div>
-                    <div><div class="route-item-title">RUTA</div><div class="route-item-value" style="font-size: 13px;">${route.ruta}</div></div>
-                    <div>
-                        <div class="route-item-title">PLAN DE VUELO</div>
-                        <a href="${route.file.content}" download="${route.file.name}" class="btn-download" style="margin-top: 5px;">DESCARGAR</a>
+                    <div><div class="route-item-title">RUTA</div><div class="route-item-value" style="font-size: 13px;">${routeText}</div></div>
+                    
+                    <div class="route-actions-full">
+                        <div class="route-item-title">ACCIONES PLAN</div>
+                        <div class="route-buttons-row">
+                            <a href="${route.file.content}" download="${route.file.name}" class="btn-download">DESCARGAR</a>
+                            <button onclick="abrirSimBrief('${airline}', '${flightNum}', '${orig}', '${dest}', '${aircraft}', '${callsign}', '${routeText}')" class="btn-simbrief">IMPORTAR RUTA</button>
+                        </div>
                     </div>
                 </div>
-            `).join('');
+            `;
+            }).join('');
         }
 
         function renderAdminRoutes() {
@@ -1628,9 +1509,9 @@
 
             container.innerHTML = routesData.map(route => `
                 <div class="route-card" style="border-left-color: var(--warning-color);">
-                    <div><div class="route-item-title">Nº VUELO</div><div class="route-item-value">${route.vuelo}</div></div>
+                    <div><div class="route-item-title">Nº VUELO</div><div class="route-item-value">${route.callsign || route.vuelo}</div></div>
                     <div><div class="route-item-title">AERONAVE</div><div class="route-item-value">${route.aeronave || '-'}</div></div>
-                    <div><div class="route-item-title">ICAO</div><div class="route-item-value">${route.icao}</div></div>
+                    <div><div class="route-item-title">ORIGEN - DESTINO</div><div class="route-item-value">${route.icao}</div></div>
                     <div><div class="route-item-title">TIEMPO</div><div class="route-item-value">${route.tiempo}</div></div>
                     <div><div class="route-item-title">ESTACIONAMIENTO</div><div class="route-item-value">${route.estacionamiento}</div></div>
                     <div><div class="route-item-title">RUTA</div><div class="route-item-value" style="font-size: 13px;">${route.ruta}</div></div>
@@ -1657,8 +1538,11 @@
 
             document.getElementById('edit-id').value = route.id;
             document.getElementById('edit-vuelo').value = route.vuelo;
+            document.getElementById('edit-airline').value = route.airline || '';
+            document.getElementById('edit-callsign').value = route.callsign || '';
             document.getElementById('edit-aeronave').value = route.aeronave || '';
-            document.getElementById('edit-icao').value = route.icao;
+            document.getElementById('edit-origenIcao').value = route.origenIcao || '';
+            document.getElementById('edit-destinoIcao').value = route.destinoIcao || '';
             document.getElementById('edit-tiempo').value = route.tiempo;
             document.getElementById('edit-estacionamiento').value = route.estacionamiento;
             document.getElementById('edit-ruta').value = route.ruta;
@@ -1677,17 +1561,23 @@
         document.getElementById('editForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const id = Number(document.getElementById('edit-id').value);
+            const orig = document.getElementById('edit-origenIcao').value.toUpperCase().trim();
+            const dest = document.getElementById('edit-destinoIcao').value.toUpperCase().trim();
             
             routesData = routesData.map(route => {
                 if (route.id === id) {
                     return {
                         ...route,
-                        vuelo: document.getElementById('edit-vuelo').value.toUpperCase(),
-                        aeronave: document.getElementById('edit-aeronave').value.toUpperCase(),
-                        icao: document.getElementById('edit-icao').value.toUpperCase(),
-                        tiempo: document.getElementById('edit-tiempo').value.toUpperCase(),
-                        estacionamiento: document.getElementById('edit-estacionamiento').value.toUpperCase(),
-                        ruta: document.getElementById('edit-ruta').value.toUpperCase(),
+                        vuelo: document.getElementById('edit-vuelo').value.toUpperCase().trim(),
+                        airline: document.getElementById('edit-airline').value.toUpperCase().trim(),
+                        callsign: document.getElementById('edit-callsign').value.toUpperCase().trim(),
+                        aeronave: document.getElementById('edit-aeronave').value.toUpperCase().trim(),
+                        origenIcao: orig,
+                        destinoIcao: dest,
+                        icao: `${orig} - ${dest}`,
+                        tiempo: document.getElementById('edit-tiempo').value.toUpperCase().trim(),
+                        estacionamiento: document.getElementById('edit-estacionamiento').value.toUpperCase().trim(),
+                        ruta: document.getElementById('edit-ruta').value.toUpperCase().trim(),
                         file: editSelectedFileData ? editSelectedFileData : route.file
                     };
                 }
